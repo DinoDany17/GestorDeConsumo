@@ -1,11 +1,17 @@
-﻿namespace GestorDeConsumo.Database.Models
+﻿
+namespace GestorDeConsumo.Database.Models
 {
-    internal class Employee : CRUD
+    public class Employee
     {
-        static string tableName = "Employee";
-        static string[] columns = new string[] { "name", "fingerprint" };
-        public Employee() : base(tableName, columns)
+        public int id { get; set; }
+        public string name { get; set; }
+        public byte[] fingerprint { get; set; }
+
+        public Employee(int id, string name, byte[] fingerprint)
         {
+            this.id = id;
+            this.name = name;
+            this.fingerprint = fingerprint;
         }
     }
 }

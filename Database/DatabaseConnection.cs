@@ -26,7 +26,7 @@ namespace GestorDeConsumo
                     {
                         command.ExecuteNonQuery();
                     }
-                    sql = "CREATE TABLE IF NOT EXISTS DishType (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT NOT NULL, cost REAL)";
+                    sql = "CREATE TABLE IF NOT EXISTS DishType (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT NOT NULL, cost REAL NOT NULL)";
                     using (SQLiteCommand command = new SQLiteCommand(sql, connection))
                     {
                         command.ExecuteNonQuery();
@@ -36,7 +36,7 @@ namespace GestorDeConsumo
                     {
                         command.ExecuteNonQuery();
                     }
-                    sql = "INSERT INTO DishType (name) VALUES ('Platillo regular'), ('Platillo especial'), ('Combo')";
+                    sql = "INSERT INTO DishType (name, cost) VALUES ('Platillo regular', 0), ('Platillo especial', 0), ('Combo', 0)";
                     using (SQLiteCommand command = new SQLiteCommand(sql, connection))
                     {
                         command.ExecuteNonQuery();

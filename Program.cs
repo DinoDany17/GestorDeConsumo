@@ -1,4 +1,5 @@
 using dotenv.net;
+using GestorDeConsumo.Database.Models;
 
 namespace GestorDeConsumo
 {
@@ -30,7 +31,7 @@ namespace GestorDeConsumo
             }
 
             //ApplicationConfiguration.Initialize();
-            //Application.Run(new HomePage());
+            Application.Run(new HomePage());
         }
     }
 }

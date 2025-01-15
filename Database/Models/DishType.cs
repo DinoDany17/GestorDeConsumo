@@ -1,11 +1,16 @@
 ﻿namespace GestorDeConsumo.Database.Models
 {
-    internal class DishType : CRUD
+    public class DishType
     {
-        static string tableName = "DishType";
-        static string[] columns = new string[] { "name", "cost" };
-        public DishType() : base(tableName, columns)
+        public int id { get; set; }
+        public string name { get; set; }
+        public decimal cost { get; set; }
+
+        public DishType(int id, string name, decimal cost)
         {
+            this.id = id;
+            this.name = name;
+            this.cost = cost;
         }
     }
 }
