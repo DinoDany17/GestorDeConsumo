@@ -3,24 +3,18 @@ using GestorDeConsumo.Database.Models;
 
 namespace GestorDeConsumo.Database.Repositories
 {
-    public class DishTypeRepository
+    public static class DishTypeRepository
     {
-        private DatabaseConnection database;
 
-        public DishTypeRepository()
+        public static DishType[] GetAll()
         {
-
-            this.database = new DatabaseConnection();
-        }
-
-        public List<DishType> GetAll()
-        {
+            DatabaseConnection database = new DatabaseConnection();
             List<DishType> dishTypes = new List<DishType>();
 
             using (SQLiteConnection connection = database.GetConnection())
             {
                 connection.Open();
-                string query = "SELECT * FROM DishType";
+                string query = "SELECT * FROM DishType WHERE deleted_at IS NULL";
 
                 using (SQLiteCommand command = new SQLiteCommand(query, connection))
                 {
@@ -32,7 +26,8 @@ namespace GestorDeConsumo.Database.Repositories
                             (
                                 reader.GetInt32(reader.GetOrdinal("id")),
                                 reader.GetString(reader.GetOrdinal("name")),
-                                reader.GetDecimal(reader.GetOrdinal("cost"))
+                                reader.GetDecimal(reader.GetOrdinal("cost")),
+                                null
                             );
                             dishTypes.Add(dishType);
                         }
@@ -40,17 +35,18 @@ namespace GestorDeConsumo.Database.Repositories
                 }
             }
 
-            return dishTypes;
+            return dishTypes.ToArray();
         }
 
-        public DishType? GetById(int id)
+        public static DishType? GetById(int id)
         {
+            DatabaseConnection database = new DatabaseConnection();
             DishType? dishType = null;
 
             using (SQLiteConnection connection = database.GetConnection())
             {
                 connection.Open();
-                string query = "SELECT * FROM DishType WHERE id = @id";
+                string query = "SELECT * FROM DishType WHERE id = @id AND deleted_at IS NULL";
 
                 using (SQLiteCommand command = new SQLiteCommand(query, connection))
                 {
@@ -64,7 +60,8 @@ namespace GestorDeConsumo.Database.Repositories
                             (
                                 reader.GetInt32(reader.GetOrdinal("id")),
                                 reader.GetString(reader.GetOrdinal("name")),
-                                reader.GetDecimal(reader.GetOrdinal("cost"))
+                                reader.GetDecimal(reader.GetOrdinal("cost")),
+                                null
                             );
                         }
                     }
@@ -74,34 +71,81 @@ namespace GestorDeConsumo.Database.Repositories
             return dishType;
         }
 
-        public DishType Insert(DishType dishType)
+        public static DishType? GetByName(string name)
         {
-            using (SQLiteConnection connection = database.GetConnection())
+            DishType? dishType = null;
+            try
             {
-                connection.Open();
-                string query = "INSERT INTO DishType (name, cost) VALUES (@name, @cost); SELECT SCOPE_IDENTITY();";
-                using (SQLiteCommand command = new SQLiteCommand(query, connection))
+                DatabaseConnection database = new DatabaseConnection();
+                using (SQLiteConnection connection = database.GetConnection())
                 {
-                    command.Parameters.AddWithValue("@name", dishType.name);
-                    command.Parameters.AddWithValue("@cost", dishType.cost);
-                    dishType.id = Convert.ToInt32(command.ExecuteScalar());
+                    connection.Open();
+                    string query = "SELECT * FROM DishType WHERE name = @name AND deleted_at IS NULL";
+                    using (SQLiteCommand command = new SQLiteCommand(query, connection))
+                    {
+                        command.Parameters.AddWithValue("@name", name);
+                        using (SQLiteDataReader reader = command.ExecuteReader())
+                        {
+                            if (reader.Read())
+                            {
+                                dishType = new DishType
+                                (
+                                    reader.GetInt32(reader.GetOrdinal("id")),
+                                    reader.GetString(reader.GetOrdinal("name")),
+                                    reader.GetDecimal(reader.GetOrdinal("cost")),
+                                    null
+                                );
+                            }
+                        }
+                    }
                 }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error al obtener el platillo por nombre: {ex.Message}");
             }
             return dishType;
         }
 
-        public bool Update(DishType dishType)
+        public static DishType? Insert(string name, decimal cost)
         {
+            try
+            {
+                DatabaseConnection database = new DatabaseConnection();
+                using (SQLiteConnection connection = database.GetConnection())
+                {
+                    connection.Open();
+                    string query = "INSERT INTO DishType (name, cost) VALUES (@name, @cost); SELECT LAST_INSERT_ROWID();";
+                    using (SQLiteCommand command = new SQLiteCommand(query, connection))
+                    {
+                        command.Parameters.AddWithValue("@name", name);
+                        command.Parameters.AddWithValue("@cost", cost);
+                        int id = Convert.ToInt32(command.ExecuteScalar());
+                        return new DishType(id, name, cost, null);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error al insertar empleado: {ex.Message}");
+                return null;
+            }
+        }
+
+        public static bool Update(DishType dishType)
+        {
+            DatabaseConnection database = new DatabaseConnection();
             bool success = false;
             using (SQLiteConnection connection = database.GetConnection())
             {
                 connection.Open();
-                string query = "UPDATE DishType SET name = @name, cost = @cost WHERE id = @id";
+                string query = "UPDATE DishType SET name = @name, cost = @cost, deleted_at = @deleted_at WHERE id = @id";
                 using (SQLiteCommand command = new SQLiteCommand(query, connection))
                 {
                     command.Parameters.AddWithValue("@id", dishType.id);
                     command.Parameters.AddWithValue("@name", dishType.name);
                     command.Parameters.AddWithValue("@cost", dishType.cost);
+                    command.Parameters.AddWithValue("@deleted_at", dishType.deleted_at);
                     success = command.ExecuteNonQuery() > 0;
                 }
 
@@ -109,16 +153,19 @@ namespace GestorDeConsumo.Database.Repositories
             return success;
         }
 
-        public bool Delete(int id)
+        public static bool Delete(int id)
         {
+            DatabaseConnection database = new DatabaseConnection();
             bool success = false;
             using (SQLiteConnection connection = database.GetConnection())
             {
                 connection.Open();
-                string query = "DELETE FROM DishType WHERE id = @id";
+                string currentDateTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+                string query = "UPDATE DishType SET deleted_at = @deleted_at WHERE id = @id";
                 using (SQLiteCommand command = new SQLiteCommand(query, connection))
                 {
                     command.Parameters.AddWithValue("@id", id);
+                    command.Parameters.AddWithValue("@deleted_at", currentDateTime);
                     success = command.ExecuteNonQuery() > 0;
                 }
             }

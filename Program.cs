@@ -1,5 +1,6 @@
 using dotenv.net;
-using GestorDeConsumo.Database.Models;
+using GestorDeConsumo.Controllers;
+using GestorDeConsumo.Views;
 
 namespace GestorDeConsumo
 {
@@ -29,6 +30,7 @@ namespace GestorDeConsumo
             {
                 databaseConnection.CreateDatabase();
             }
+            DishTypeController.UpdateDishTypesEnum();
 
             //ApplicationConfiguration.Initialize();
             Application.Run(new HomePage());

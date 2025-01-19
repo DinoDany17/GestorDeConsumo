@@ -21,12 +21,12 @@ namespace GestorDeConsumo
                 using (SQLiteConnection connection = GetConnection())
                 {
                     connection.Open();
-                    string sql = "CREATE TABLE IF NOT EXISTS Employee (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT NOT NULL, fingerprint BLOB NOT NULL)";
+                    string sql = "CREATE TABLE IF NOT EXISTS Employee (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT NOT NULL, fingerprint BLOB NOT NULL, deleted_at TEXT)";
                     using (SQLiteCommand command = new SQLiteCommand(sql, connection))
                     {
                         command.ExecuteNonQuery();
                     }
-                    sql = "CREATE TABLE IF NOT EXISTS DishType (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT NOT NULL, cost REAL NOT NULL)";
+                    sql = "CREATE TABLE IF NOT EXISTS DishType (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT NOT NULL, cost REAL NOT NULL, deleted_at TEXT)";
                     using (SQLiteCommand command = new SQLiteCommand(sql, connection))
                     {
                         command.ExecuteNonQuery();

@@ -1,16 +1,26 @@
-﻿namespace GestorDeConsumo
+﻿using GestorDeConsumo.Database.Models;
+
+namespace GestorDeConsumo
 {
     internal static class Enums
     {
-        public static Dictionary<string, float> DishTypes;
+        public static DishType[] dishTypes = new DishType[0];
 
-        public static void UpdateDishType((string, float)[] types)
+        public static void UpdateDishType(DishType[] types)
         {
-            DishTypes = new Dictionary<string, float>();
-            foreach ((string type, float cost) in types)
+            dishTypes = types;
+        }
+
+        public static int GetDishTypeIdByName(string name)
+        {
+            foreach (DishType type in dishTypes)
             {
-                DishTypes.Add(type, cost);
+                if (type.name == name)
+                {
+                    return type.id;
+                }
             }
+            return -1;
         }
     }
 }

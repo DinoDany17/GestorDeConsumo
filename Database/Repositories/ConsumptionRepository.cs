@@ -3,16 +3,11 @@ using GestorDeConsumo.Database.Models;
 
 namespace GestorDeConsumo.Database.Repositories
 {
-    public class ConsumptionRepository
+    public static class ConsumptionRepository
     {
-        private DatabaseConnection database;
-        public ConsumptionRepository() 
+        public static Consumption[] GetAll()
         {
-            this.database = new DatabaseConnection();
-        }
-
-        public List<Consumption> GetAll()
-        {
+            DatabaseConnection database = new DatabaseConnection();
             List<Consumption> consumptions = new List<Consumption>();
             using (SQLiteConnection connection = database.GetConnection())
             {
@@ -34,11 +29,39 @@ namespace GestorDeConsumo.Database.Repositories
                     }
                 }
             }
-            return consumptions;
+            return consumptions.ToArray();
         }
 
-        public Consumption? GetById(int id) 
+        public static Consumption[] GetAll(string condition)
         {
+            DatabaseConnection database = new DatabaseConnection();
+            List<Consumption> consumptions = new List<Consumption>();
+            using (SQLiteConnection connection = database.GetConnection())
+            {
+                connection.Open();
+                string sql = $"SELECT * FROM consumption WHERE {condition}";
+                using (SQLiteCommand command = new SQLiteCommand(sql, connection))
+                {
+                    using (SQLiteDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            consumptions.Add(new Consumption(
+                                reader.GetInt32(reader.GetOrdinal("id")),
+                                reader.GetInt32(reader.GetOrdinal("employee_id")),
+                                reader.GetInt32(reader.GetOrdinal("dish_type_id")),
+                                reader.GetString(reader.GetOrdinal("date"))
+                            ));
+                        }
+                    }
+                }
+            }
+            return consumptions.ToArray();
+        }
+
+        public static Consumption? GetById(int id) 
+        {
+            DatabaseConnection database = new DatabaseConnection();
             Consumption? consumption = null;
             using (SQLiteConnection connection = database.GetConnection())
             {
@@ -64,25 +87,35 @@ namespace GestorDeConsumo.Database.Repositories
             return consumption;
         }
 
-        public Consumption Insert(Consumption consumption)
+        public static Consumption? Insert(int employee_id, int dish_type_id, string date)
         {
-            using (SQLiteConnection connection = database.GetConnection())
+            try
             {
-                connection.Open();
-                string sql = "INSERT INTO consumption (employee_id, dish_type_id, date) VALUES (@employee_id, @dish_type_id, @date)";
-                using (SQLiteCommand command = new SQLiteCommand(sql, connection))
+                DatabaseConnection database = new DatabaseConnection();
+                using (SQLiteConnection connection = database.GetConnection())
                 {
-                    command.Parameters.AddWithValue("@employee_id", consumption.employee_id);
-                    command.Parameters.AddWithValue("@dish_type_id", consumption.dish_type_id);
-                    command.Parameters.AddWithValue("@date", consumption.date);
-                    consumption.id = Convert.ToInt32(command.ExecuteScalar());
+                    connection.Open();
+                    string sql = "INSERT INTO consumption (employee_id, dish_type_id, date) VALUES (@employee_id, @dish_type_id, @date); SELECT LAST_INSERT_ROWID()";
+                    using (SQLiteCommand command = new SQLiteCommand(sql, connection))
+                    {
+                        command.Parameters.AddWithValue("@employee_id", employee_id);
+                        command.Parameters.AddWithValue("@dish_type_id", dish_type_id);
+                        command.Parameters.AddWithValue("@date", date);
+                        int id = Convert.ToInt32(command.ExecuteScalar());
+                        return new Consumption(id, employee_id, dish_type_id, date);
+                    }
                 }
             }
-            return consumption;
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error al insertar empleado: {ex.Message}");
+                return null;
+            }
         }
 
-        public bool Update(Consumption consumption)
+        public static bool Update(Consumption consumption)
         {
+            DatabaseConnection database = new DatabaseConnection();
             bool success = false;
             using (SQLiteConnection connection = database.GetConnection())
             {
@@ -100,8 +133,9 @@ namespace GestorDeConsumo.Database.Repositories
             return success;
         }
 
-        public bool Delete(int id)
+        public static bool Delete(int id)
         {
+            DatabaseConnection database = new DatabaseConnection();
             bool success = false;
             using (SQLiteConnection connection = database.GetConnection())
             {
