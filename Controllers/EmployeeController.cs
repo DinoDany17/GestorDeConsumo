@@ -15,6 +15,11 @@ namespace GestorDeConsumo.Controllers
             return EmployeeRepository.Insert(name, fingerprint);
         }
 
+        public static bool UpdateEmployee(int id, string columnName, dynamic value)
+        {
+            return EmployeeRepository.Update(id, columnName, value);
+        }
+
         public static bool DeleteEmployee(int id)
         {
             return EmployeeRepository.Delete(id);

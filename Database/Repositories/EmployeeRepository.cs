@@ -96,19 +96,18 @@ namespace GestorDeConsumo.Database.Repositories
             }
         }
 
-        public static bool Update(Employee employee)
+        public static bool Update(int id, string columnName, dynamic value)
         {
             DatabaseConnection database = new DatabaseConnection();
             bool success = false;
             using (SQLiteConnection connection = database.GetConnection())
             {
                 connection.Open();
-                string query = "UPDATE Employee SET name = @name, fingerprint = @fingerprint WHERE id = @id";
+                string query = $"UPDATE Employee SET {columnName} = @value WHERE id = @id";
                 using (SQLiteCommand command = new SQLiteCommand(query, connection))
                 {
-                    command.Parameters.AddWithValue("@id", employee.id);
-                    command.Parameters.AddWithValue("@name", employee.name);
-                    command.Parameters.AddWithValue("@fingerprint", employee.fingerprint);
+                    command.Parameters.AddWithValue("@id", id);
+                    command.Parameters.AddWithValue("@value", value);
                     success = command.ExecuteNonQuery() > 0;
                 }
 

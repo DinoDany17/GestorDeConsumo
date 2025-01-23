@@ -31,11 +31,11 @@
             ButtonFingerprint = new Button();
             LabelEmployeeName = new Label();
             TableEmployee = new DataGridView();
-            Id = new DataGridViewTextBoxColumn();
-            Employee = new DataGridViewTextBoxColumn();
-            Fingerprint = new DataGridViewButtonColumn();
-            Delete = new DataGridViewButtonColumn();
             TextBoxName = new TextBox();
+            id = new DataGridViewTextBoxColumn();
+            name = new DataGridViewTextBoxColumn();
+            fingerprint = new DataGridViewButtonColumn();
+            delete = new DataGridViewButtonColumn();
             ((System.ComponentModel.ISupportInitialize)TableEmployee).BeginInit();
             SuspendLayout();
             // 
@@ -44,7 +44,7 @@
             ButtonFingerprint.Enabled = false;
             ButtonFingerprint.Location = new Point(458, 38);
             ButtonFingerprint.Name = "ButtonFingerprint";
-            ButtonFingerprint.Size = new Size(199, 23);
+            ButtonFingerprint.Size = new Size(131, 23);
             ButtonFingerprint.TabIndex = 5;
             ButtonFingerprint.Text = "Leer huella digital";
             ButtonFingerprint.UseVisualStyleBackColor = true;
@@ -69,48 +69,17 @@
             TableEmployee.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             TableEmployee.BackgroundColor = SystemColors.ControlLight;
             TableEmployee.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            TableEmployee.Columns.AddRange(new DataGridViewColumn[] { Id, Employee, Fingerprint, Delete });
-            TableEmployee.EditMode = DataGridViewEditMode.EditProgrammatically;
+            TableEmployee.Columns.AddRange(new DataGridViewColumn[] { id, name, fingerprint, delete });
+            TableEmployee.EditMode = DataGridViewEditMode.EditOnKeystroke;
             TableEmployee.Location = new Point(19, 75);
             TableEmployee.Name = "TableEmployee";
             TableEmployee.RowHeadersVisible = false;
             TableEmployee.RowTemplate.Height = 25;
             TableEmployee.Size = new Size(1006, 468);
             TableEmployee.TabIndex = 3;
+            TableEmployee.CellBeginEdit += TableEmployee_CellBeginEdit;
             TableEmployee.CellContentClick += TableEmployee_CellContentClick;
-            // 
-            // Id
-            // 
-            Id.Frozen = true;
-            Id.HeaderText = "Id";
-            Id.Name = "Id";
-            Id.ReadOnly = true;
-            // 
-            // Employee
-            // 
-            Employee.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            Employee.HeaderText = "Empleado";
-            Employee.MinimumWidth = 200;
-            Employee.Name = "Employee";
-            Employee.ReadOnly = true;
-            // 
-            // Fingerprint
-            // 
-            Fingerprint.HeaderText = "Huella dactilar";
-            Fingerprint.Name = "Fingerprint";
-            Fingerprint.ReadOnly = true;
-            Fingerprint.Resizable = DataGridViewTriState.True;
-            Fingerprint.SortMode = DataGridViewColumnSortMode.Automatic;
-            Fingerprint.Text = "Editar";
-            Fingerprint.Width = 125;
-            // 
-            // Delete
-            // 
-            Delete.HeaderText = "";
-            Delete.Name = "Delete";
-            Delete.ReadOnly = true;
-            Delete.Text = "X";
-            Delete.Width = 50;
+            TableEmployee.CellEndEdit += TableEmployee_CellEndEdit;
             // 
             // TextBoxName
             // 
@@ -119,6 +88,38 @@
             TextBoxName.Size = new Size(433, 23);
             TextBoxName.TabIndex = 7;
             TextBoxName.TextChanged += TextBoxName_TextChanged;
+            // 
+            // id
+            // 
+            id.Frozen = true;
+            id.HeaderText = "Id";
+            id.Name = "id";
+            id.ReadOnly = true;
+            // 
+            // name
+            // 
+            name.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            name.HeaderText = "Nombre";
+            name.MinimumWidth = 200;
+            name.Name = "name";
+            // 
+            // fingerprint
+            // 
+            fingerprint.HeaderText = "Huella dactilar";
+            fingerprint.Name = "fingerprint";
+            fingerprint.ReadOnly = true;
+            fingerprint.Resizable = DataGridViewTriState.True;
+            fingerprint.SortMode = DataGridViewColumnSortMode.Automatic;
+            fingerprint.Text = "Editar";
+            fingerprint.Width = 125;
+            // 
+            // delete
+            // 
+            delete.HeaderText = "";
+            delete.Name = "delete";
+            delete.ReadOnly = true;
+            delete.Text = "X";
+            delete.Width = 50;
             // 
             // RegisterEmployee
             // 
@@ -142,9 +143,9 @@
         private Label LabelEmployeeName;
         private DataGridView TableEmployee;
         private TextBox TextBoxName;
-        private DataGridViewTextBoxColumn Id;
-        private DataGridViewTextBoxColumn Employee;
-        private DataGridViewButtonColumn Fingerprint;
-        private DataGridViewButtonColumn Delete;
+        private DataGridViewTextBoxColumn id;
+        private DataGridViewTextBoxColumn name;
+        private DataGridViewButtonColumn fingerprint;
+        private DataGridViewButtonColumn delete;
     }
 }

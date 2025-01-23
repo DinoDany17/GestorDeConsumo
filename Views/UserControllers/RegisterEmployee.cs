@@ -1,6 +1,5 @@
 ﻿using GestorDeConsumo.Controllers;
 using GestorDeConsumo.Database.Models;
-using GestorDeConsumo.Database.Repositories;
 using GestorDeConsumo.Views.UserControllers.MessageBoxes;
 
 namespace GestorDeConsumo.Views.UserControllers
@@ -11,6 +10,8 @@ namespace GestorDeConsumo.Views.UserControllers
         {
             InitializeComponent();
         }
+
+        private string? originalCellValue = "";
 
         private void RegisterEmployee_Load(object sender, EventArgs e)
         {
@@ -64,6 +65,47 @@ namespace GestorDeConsumo.Views.UserControllers
                     }
                 }
             }
+        }
+
+        private void TableEmployee_CellBeginEdit(object sender, DataGridViewCellCancelEventArgs e)
+        {
+            DataGridViewColumn currentColumn = TableEmployee.Columns[e.ColumnIndex];
+            if (currentColumn.Name == "name")
+            {
+                originalCellValue = TableEmployee.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString();
+            }
+        }
+
+        private void TableEmployee_CellEndEdit(object sender, DataGridViewCellEventArgs e)
+        {
+            DataGridViewRow currentRow = TableEmployee.Rows[e.RowIndex];
+            DataGridViewColumn currentColumn = TableEmployee.Columns[e.ColumnIndex];
+            DataGridViewCell currentCell = currentRow.Cells[currentColumn.Index];
+            if (currentColumn.Name == "name")
+            {
+                string? value = currentCell.Value?.ToString();
+                if (string.IsNullOrEmpty(value) || value.Length <= 3)
+                {
+                    currentCell.Value = originalCellValue;
+                    Console.WriteLine("El nombre es demasiado corto.");
+                    return;
+                }
+                int id = int.TryParse(currentRow.Cells[0].Value?.ToString(), out var parsedId) ? parsedId : -1;
+                if (id == -1)
+                {
+                    currentCell.Value = originalCellValue;
+                    Console.WriteLine("ID inválido.");
+                    return;
+                }
+                bool success = EmployeeController.UpdateEmployee(id, currentColumn.Name, value);
+                if (!success)
+                {
+                    currentCell.Value = originalCellValue;
+                    Console.WriteLine("Error al actualizar el empleado.");
+                }
+            }
+
+            originalCellValue = string.Empty;
         }
     }
 }

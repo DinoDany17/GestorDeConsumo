@@ -1,6 +1,7 @@
 ﻿using GestorDeConsumo.Controllers;
 using GestorDeConsumo.Database.Models;
 using GestorDeConsumo.Views.UserControllers.MessageBoxes;
+using GestorDeConsumo.Utils;
 
 namespace GestorDeConsumo.Views.UserControllers
 {
@@ -10,6 +11,8 @@ namespace GestorDeConsumo.Views.UserControllers
         {
             InitializeComponent();
         }
+
+        private string? originalCellValue = "";
 
         private void RegisterDishType_Load(object sender, EventArgs e)
         {
@@ -48,7 +51,7 @@ namespace GestorDeConsumo.Views.UserControllers
             if (e.ColumnIndex == 3)
             {
                 DialogResult response = ConfirmMessageBox.Show("¿Estás seguro de querer eliminar este platillo?");
-                if (response == DialogResult.OK) 
+                if (response == DialogResult.OK)
                 {
                     string stringId = currentRow.Cells[0].Value.ToString() ?? "-1";
                     int id = Int32.Parse(stringId);
@@ -61,6 +64,46 @@ namespace GestorDeConsumo.Views.UserControllers
                         }
                     }
                 }
+            }
+        }
+
+        private void TableDishType_CellBeginEdit(object sender, DataGridViewCellCancelEventArgs e)
+        {
+            originalCellValue = TableDishType.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString();
+        }
+
+        private void TableDishType_CellEndEdit(object sender, DataGridViewCellEventArgs e)
+        {
+            DataGridViewRow currentRow = TableDishType.Rows[e.RowIndex];
+            DataGridViewColumn currentColumn = TableDishType.Columns[e.ColumnIndex];
+            DataGridViewCell currentCell = currentRow.Cells[currentColumn.Index];
+            var value = currentCell.Value;
+
+            if (currentColumn.Name == "cost")
+            {
+                string? cellValue = currentCell.Value?.ToString();
+                if (string.IsNullOrEmpty(cellValue) || !Validations.validateDecimal(cellValue))
+                {
+                    currentCell.Value = originalCellValue;
+                    Console.WriteLine("Valor inválido para el campo 'costo'.");
+                    return;
+                }
+                value = decimal.Parse(cellValue);
+            }
+
+            int id = int.TryParse(currentRow.Cells[0].Value?.ToString(), out var parsedId) ? parsedId : -1;
+            if (id == -1)
+            {
+                Console.WriteLine("ID inválido.");
+                currentCell.Value = originalCellValue;
+                return;
+            }
+
+            bool success = DishTypeController.UpdateDishType(id, currentColumn.Name, value);
+            if (!success)
+            {
+                currentCell.Value = originalCellValue;
+                Console.WriteLine("Error al actualizar el platillo");
             }
         }
     }

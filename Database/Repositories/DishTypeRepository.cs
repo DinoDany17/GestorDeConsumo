@@ -132,20 +132,18 @@ namespace GestorDeConsumo.Database.Repositories
             }
         }
 
-        public static bool Update(DishType dishType)
+        public static bool Update(int id, string columnName, dynamic value)
         {
             DatabaseConnection database = new DatabaseConnection();
             bool success = false;
             using (SQLiteConnection connection = database.GetConnection())
             {
                 connection.Open();
-                string query = "UPDATE DishType SET name = @name, cost = @cost, deleted_at = @deleted_at WHERE id = @id";
+                string query = $"UPDATE DishType SET {columnName} = @value WHERE id = @id";
                 using (SQLiteCommand command = new SQLiteCommand(query, connection))
                 {
-                    command.Parameters.AddWithValue("@id", dishType.id);
-                    command.Parameters.AddWithValue("@name", dishType.name);
-                    command.Parameters.AddWithValue("@cost", dishType.cost);
-                    command.Parameters.AddWithValue("@deleted_at", dishType.deleted_at);
+                    command.Parameters.AddWithValue("@id", id);
+                    command.Parameters.AddWithValue("@value", value);
                     success = command.ExecuteNonQuery() > 0;
                 }
 
