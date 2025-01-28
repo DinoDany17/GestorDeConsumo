@@ -33,13 +33,14 @@
             LogBox = new RichTextBox();
             ButtonClose = new Button();
             StatusLabel = new Label();
+            TopPanel = new Panel();
             ((System.ComponentModel.ISupportInitialize)FingerprintPictureBox).BeginInit();
             SuspendLayout();
             // 
             // FingerprintPictureBox
             // 
             FingerprintPictureBox.BackColor = SystemColors.ButtonHighlight;
-            FingerprintPictureBox.Location = new Point(12, 12);
+            FingerprintPictureBox.Location = new Point(12, 50);
             FingerprintPictureBox.Name = "FingerprintPictureBox";
             FingerprintPictureBox.Size = new Size(379, 426);
             FingerprintPictureBox.TabIndex = 0;
@@ -49,7 +50,7 @@
             // 
             TitleLabel.AutoSize = true;
             TitleLabel.Font = new Font("Segoe UI", 16F, FontStyle.Bold, GraphicsUnit.Point);
-            TitleLabel.Location = new Point(488, 12);
+            TitleLabel.Location = new Point(476, 50);
             TitleLabel.Name = "TitleLabel";
             TitleLabel.Size = new Size(246, 30);
             TitleLabel.TabIndex = 1;
@@ -58,7 +59,7 @@
             // LogBox
             // 
             LogBox.BackColor = SystemColors.ButtonHighlight;
-            LogBox.Location = new Point(428, 55);
+            LogBox.Location = new Point(416, 93);
             LogBox.Name = "LogBox";
             LogBox.ReadOnly = true;
             LogBox.ScrollBars = RichTextBoxScrollBars.Vertical;
@@ -68,7 +69,7 @@
             // 
             // ButtonClose
             // 
-            ButtonClose.Location = new Point(701, 444);
+            ButtonClose.Location = new Point(689, 482);
             ButtonClose.Name = "ButtonClose";
             ButtonClose.Size = new Size(75, 23);
             ButtonClose.TabIndex = 4;
@@ -79,17 +80,31 @@
             // StatusLabel
             // 
             StatusLabel.AutoSize = true;
-            StatusLabel.Location = new Point(12, 448);
+            StatusLabel.Location = new Point(12, 486);
             StatusLabel.Name = "StatusLabel";
             StatusLabel.Size = new Size(146, 15);
             StatusLabel.TabIndex = 5;
             StatusLabel.Text = "Se necesitan 5 huellas más";
             // 
+            // TopPanel
+            // 
+            TopPanel.BackColor = Color.FromArgb(224, 145, 50);
+            TopPanel.Dock = DockStyle.Top;
+            TopPanel.Location = new Point(0, 0);
+            TopPanel.Name = "TopPanel";
+            TopPanel.Size = new Size(784, 35);
+            TopPanel.TabIndex = 10;
+            TopPanel.Paint += TopPanel_Paint;
+            TopPanel.MouseDown += TopPanel_MouseDown;
+            TopPanel.MouseMove += TopPanel_MouseMove;
+            TopPanel.MouseUp += TopPanel_MouseUp;
+            // 
             // CaptureFingerprint
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 473);
+            ClientSize = new Size(784, 513);
+            Controls.Add(TopPanel);
             Controls.Add(StatusLabel);
             Controls.Add(ButtonClose);
             Controls.Add(LogBox);
@@ -97,9 +112,11 @@
             Controls.Add(FingerprintPictureBox);
             FormBorderStyle = FormBorderStyle.None;
             Name = "CaptureFingerprint";
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "CaptureFingerprint";
             FormClosed += CaptureFingerprint_FormClosed;
             Load += CaptureFingerprint_Load;
+            Paint += CaptureFingerprint_Paint;
             ((System.ComponentModel.ISupportInitialize)FingerprintPictureBox).EndInit();
             ResumeLayout(false);
             PerformLayout();
@@ -112,5 +129,6 @@
         private RichTextBox LogBox;
         private Button ButtonClose;
         private Label StatusLabel;
+        private Panel TopPanel;
     }
 }

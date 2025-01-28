@@ -3,6 +3,8 @@ namespace GestorDeConsumo.Views
     public partial class HomePage : Form
     {
         private bool _isFullscreenModeEnabled = false;
+        private bool dragging = false;
+        private Point start_point = new Point(0, 0);
         public HomePage()
         {
             InitializeComponent();
@@ -56,6 +58,29 @@ namespace GestorDeConsumo.Views
         private void MinimizeButton_Click(object sender, EventArgs e)
         {
             this.WindowState = FormWindowState.Minimized;
+        }
+
+        private void TopPanel_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                dragging = true;
+                start_point = new Point(e.X, e.Y);
+            }
+        }
+
+        private void TopPanel_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (dragging)
+            {
+                Point p = PointToScreen(e.Location);
+                Location = new Point(p.X - this.start_point.X, p.Y - this.start_point.Y);
+            }
+        }
+
+        private void TopPanel_MouseUp(object sender, MouseEventArgs e)
+        {
+            dragging = false;
         }
     }
 }

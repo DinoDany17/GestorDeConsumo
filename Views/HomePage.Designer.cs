@@ -142,6 +142,9 @@
             TopPanel.Name = "TopPanel";
             TopPanel.Size = new Size(1045, 35);
             TopPanel.TabIndex = 1;
+            TopPanel.MouseDown += TopPanel_MouseDown;
+            TopPanel.MouseMove += TopPanel_MouseMove;
+            TopPanel.MouseUp += TopPanel_MouseUp;
             // 
             // MinimizeButton
             // 

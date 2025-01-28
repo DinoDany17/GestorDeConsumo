@@ -4,6 +4,11 @@ namespace GestorDeConsumo.Views.Fingerprint
 {
     public partial class CaptureFingerprint : Form, DPFP.Capture.EventHandler
     {
+        // Dragging
+        private bool dragging = false;
+        Point start_point = new Point(0, 0);
+
+        // Functionality
         delegate void Function();
         private DPFP.Capture.Capture? Capturer;
         private DPFP.Processing.Enrollment? Enroller;
@@ -49,6 +54,43 @@ namespace GestorDeConsumo.Views.Fingerprint
         private void ButtonClose_Click(object sender, EventArgs e)
         {
             CloseDialog(DialogResult.Cancel);
+        }
+
+        private void CaptureFingerprint_Paint(object sender, PaintEventArgs e)
+        {
+            Pen pen = new Pen(Color.Gray, 1);
+            e.Graphics.DrawRectangle(pen, 0, 0, this.ClientSize.Width - 1, this.ClientSize.Height - 1);
+        }
+
+        private void TopPanel_Paint(object sender, PaintEventArgs e)
+        {
+            Pen pen = new Pen(Color.Gray, 1);
+            e.Graphics.DrawLine(pen, 0, 0, TopPanel.Width, 0);
+            e.Graphics.DrawLine(pen, 0, 0, 0, TopPanel.Height - 1);
+            e.Graphics.DrawLine(pen, TopPanel.Width - 1, 0, TopPanel.Width - 1, TopPanel.Height - 1);
+        }
+
+        private void TopPanel_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                dragging = true;
+                start_point = new Point(e.X, e.Y);
+            }
+        }
+
+        private void TopPanel_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (dragging)
+            {
+                Point p = PointToScreen(e.Location);
+                Location = new Point(p.X - this.start_point.X, p.Y - this.start_point.Y);
+            }
+        }
+
+        private void TopPanel_MouseUp(object sender, MouseEventArgs e)
+        {
+            dragging = false;
         }
 
         #region EventHandler Members:
@@ -98,32 +140,32 @@ namespace GestorDeConsumo.Views.Fingerprint
 
             // Check quality of the sample and add to enroller if it's good
             if (features != null && OnTemplate != null) try
-            {
-                AppendLog("Se guardó la huella correctamente");
-                Enroller?.AddFeatures(features);
-            }
-            finally
-            {
-                UpdateStatus();
-
-                // Check if template has been created.
-                switch (Enroller?.TemplateStatus)
                 {
-                    case DPFP.Processing.Enrollment.Status.Failed:
-                        Enroller.Clear();
-                        Capturer?.StopCapture();
-                        UpdateStatus();
-                        OnTemplate(null);
-                        Capturer?.StartCapture();
-                        AppendLog("Picalewe");
-                        break;
-                    case DPFP.Processing.Enrollment.Status.Ready:
-                        OnTemplate(Enroller.Template);
-                        Capturer?.StopCapture();
-                        CloseDialog(DialogResult.OK);
-                        break;
+                    AppendLog("Se guardó la huella correctamente");
+                    Enroller?.AddFeatures(features);
                 }
-            }
+                finally
+                {
+                    UpdateStatus();
+
+                    // Check if template has been created.
+                    switch (Enroller?.TemplateStatus)
+                    {
+                        case DPFP.Processing.Enrollment.Status.Failed:
+                            Enroller.Clear();
+                            Capturer?.StopCapture();
+                            UpdateStatus();
+                            OnTemplate(null);
+                            Capturer?.StartCapture();
+                            AppendLog("Picalewe");
+                            break;
+                        case DPFP.Processing.Enrollment.Status.Ready:
+                            OnTemplate(Enroller.Template);
+                            Capturer?.StopCapture();
+                            CloseDialog(DialogResult.OK);
+                            break;
+                    }
+                }
         }
 
         private void AppendLog(string message)

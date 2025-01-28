@@ -6,6 +6,11 @@ namespace GestorDeConsumo.Views.Fingerprint
 {
     public partial class VerifyFingerprint : Form, DPFP.Capture.EventHandler
     {
+        // Dragging
+        private bool dragging = false;
+        Point start_point = new Point(0, 0);
+
+        // Functionality
         delegate void Function();
         Employee[] employees = new Employee[0];
         DPFP.Capture.Capture? capture;
@@ -173,5 +178,42 @@ namespace GestorDeConsumo.Views.Fingerprint
         }
 
         #endregion
+
+        private void VerifyFingerprint_Paint(object sender, PaintEventArgs e)
+        {
+            Pen pen = new Pen(Color.Gray, 1);
+            e.Graphics.DrawRectangle(pen, 0, 0, this.ClientSize.Width - 1, this.ClientSize.Height - 1);
+        }
+
+        private void TopPanel_Paint(object sender, PaintEventArgs e)
+        {
+            Pen pen = new Pen(Color.Gray, 1);
+            e.Graphics.DrawLine(pen, 0, 0, TopPanel.Width, 0);
+            e.Graphics.DrawLine(pen, 0, 0, 0, TopPanel.Height - 1);
+            e.Graphics.DrawLine(pen, TopPanel.Width - 1, 0, TopPanel.Width - 1, TopPanel.Height - 1);
+        }
+
+        private void TopPanel_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                dragging = true;
+                start_point = new Point(e.X, e.Y);
+            }
+        }
+
+        private void TopPanel_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (dragging)
+            {
+                Point p = PointToScreen(e.Location);
+                Location = new Point(p.X - this.start_point.X, p.Y - this.start_point.Y);
+            }
+        }
+
+        private void TopPanel_MouseUp(object sender, MouseEventArgs e)
+        {
+            dragging = false;
+        }
     }
 }
