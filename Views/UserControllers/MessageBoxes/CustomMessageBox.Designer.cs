@@ -1,6 +1,6 @@
 ﻿namespace GestorDeConsumo.Views.UserControllers.MessageBoxes
 {
-    partial class ConfirmMessageBox
+    partial class CustomMessageBox
     {
         /// <summary> 
         /// Variable del diseñador necesaria.
@@ -28,33 +28,33 @@
         /// </summary>
         private void InitializeComponent()
         {
-            Top = new Panel();
-            pictureBox1 = new PictureBox();
+            TopPanel = new Panel();
+            IconPictureBox = new PictureBox();
             ConfirmLabel = new Label();
             ButtonAgree = new Button();
             ButtonCancel = new Button();
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)IconPictureBox).BeginInit();
             SuspendLayout();
             // 
-            // Top
+            // TopPanel
             // 
-            Top.BackColor = Color.FromArgb(224, 145, 50);
-            Top.Dock = DockStyle.Top;
-            Top.Location = new Point(0, 0);
-            Top.Name = "Top";
-            Top.Size = new Size(250, 35);
-            Top.TabIndex = 2;
+            TopPanel.BackColor = Color.FromArgb(224, 145, 50);
+            TopPanel.Dock = DockStyle.Top;
+            TopPanel.Location = new Point(0, 0);
+            TopPanel.Name = "TopPanel";
+            TopPanel.Size = new Size(250, 35);
+            TopPanel.TabIndex = 2;
             // 
-            // pictureBox1
+            // IconPictureBox
             // 
-            pictureBox1.BackgroundImage = Properties.Resources.warning;
-            pictureBox1.BackgroundImageLayout = ImageLayout.Zoom;
-            pictureBox1.InitialImage = null;
-            pictureBox1.Location = new Point(10, 45);
-            pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(50, 50);
-            pictureBox1.TabIndex = 3;
-            pictureBox1.TabStop = false;
+            IconPictureBox.BackColor = Color.Transparent;
+            IconPictureBox.BackgroundImageLayout = ImageLayout.Zoom;
+            IconPictureBox.InitialImage = null;
+            IconPictureBox.Location = new Point(10, 45);
+            IconPictureBox.Name = "IconPictureBox";
+            IconPictureBox.Size = new Size(50, 50);
+            IconPictureBox.TabIndex = 3;
+            IconPictureBox.TabStop = false;
             // 
             // ConfirmLabel
             // 
@@ -91,9 +91,10 @@
             ButtonCancel.TabIndex = 6;
             ButtonCancel.Text = "Cancelar";
             ButtonCancel.UseVisualStyleBackColor = false;
+            ButtonCancel.Visible = false;
             ButtonCancel.Click += ButtonCancel_Click;
             // 
-            // ConfirmMessageBox
+            // CustomMessageBox
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
@@ -101,19 +102,19 @@
             Controls.Add(ButtonCancel);
             Controls.Add(ButtonAgree);
             Controls.Add(ConfirmLabel);
-            Controls.Add(pictureBox1);
-            Controls.Add(Top);
+            Controls.Add(IconPictureBox);
+            Controls.Add(TopPanel);
             FormBorderStyle = FormBorderStyle.None;
-            Name = "ConfirmMessageBox";
+            Name = "CustomMessageBox";
             StartPosition = FormStartPosition.CenterScreen;
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)IconPictureBox).EndInit();
             ResumeLayout(false);
         }
 
         #endregion
 
-        private Panel Top;
-        private PictureBox pictureBox1;
+        private Panel TopPanel;
+        private PictureBox IconPictureBox;
         private Label ConfirmLabel;
         private Button ButtonAgree;
         private Button ButtonCancel;

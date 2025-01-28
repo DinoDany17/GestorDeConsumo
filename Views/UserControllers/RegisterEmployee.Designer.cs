@@ -34,7 +34,6 @@
             TextBoxName = new TextBox();
             id = new DataGridViewTextBoxColumn();
             name = new DataGridViewTextBoxColumn();
-            fingerprint = new DataGridViewButtonColumn();
             delete = new DataGridViewButtonColumn();
             ((System.ComponentModel.ISupportInitialize)TableEmployee).BeginInit();
             SuspendLayout();
@@ -69,7 +68,7 @@
             TableEmployee.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             TableEmployee.BackgroundColor = SystemColors.ControlLight;
             TableEmployee.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            TableEmployee.Columns.AddRange(new DataGridViewColumn[] { id, name, fingerprint, delete });
+            TableEmployee.Columns.AddRange(new DataGridViewColumn[] { id, name, delete });
             TableEmployee.EditMode = DataGridViewEditMode.EditOnKeystroke;
             TableEmployee.Location = new Point(19, 75);
             TableEmployee.Name = "TableEmployee";
@@ -103,16 +102,6 @@
             name.MinimumWidth = 200;
             name.Name = "name";
             // 
-            // fingerprint
-            // 
-            fingerprint.HeaderText = "Huella dactilar";
-            fingerprint.Name = "fingerprint";
-            fingerprint.ReadOnly = true;
-            fingerprint.Resizable = DataGridViewTriState.True;
-            fingerprint.SortMode = DataGridViewColumnSortMode.Automatic;
-            fingerprint.Text = "Editar";
-            fingerprint.Width = 125;
-            // 
             // delete
             // 
             delete.HeaderText = "";
@@ -145,7 +134,6 @@
         private TextBox TextBoxName;
         private DataGridViewTextBoxColumn id;
         private DataGridViewTextBoxColumn name;
-        private DataGridViewButtonColumn fingerprint;
         private DataGridViewButtonColumn delete;
     }
 }

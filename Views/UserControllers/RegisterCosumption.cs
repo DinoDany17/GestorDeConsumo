@@ -1,5 +1,8 @@
 ﻿using GestorDeConsumo.Controllers;
 using GestorDeConsumo.Views.UserControllers.MessageBoxes;
+using GestorDeConsumo.Views.Fingerprint;
+using GestorDeConsumo.Database.Models;
+using System.Windows.Forms;
 
 namespace GestorDeConsumo.Views.UserControllers
 {
@@ -24,10 +27,34 @@ namespace GestorDeConsumo.Views.UserControllers
 
         private void ButtonFingerprint_Click(object sender, EventArgs e)
         {
-            (int id, string hour, string name, string dish)? resp = ConsumptionController.RegisterConsumption(ComboBoxDishType.Text);
-            if (resp != null)
+            Employee? verifiedEmployee = null;
+            VerifyFingerprint verifyFingerprint = new VerifyFingerprint();
+            verifyFingerprint.OnTemplate += (Employee? employee) =>
             {
-                TableConsumption.Rows.Add(resp.Value.id, resp.Value.hour, resp.Value.name, resp.Value.dish);
+                verifiedEmployee = employee;
+            };
+            DialogResult result = verifyFingerprint.ShowDialog();
+            switch (result)
+            {
+                case DialogResult.Abort:
+                    CustomMessageBox.Show("No se pudo iniciar la captura", CustomMessageBoxType.Error);
+                    break;
+                case DialogResult.Cancel:
+                    CustomMessageBox.Show("La captura fue cancelada por el usuario", CustomMessageBoxType.Warning);
+                    break;
+                case DialogResult.OK:
+                    if (verifiedEmployee != null)
+                    {
+                        (int id, string hour, string name, string dish)? resp = ConsumptionController.RegisterConsumption(ComboBoxDishType.Text, verifiedEmployee);
+                        if (resp != null)
+                        {
+                            TableConsumption.Rows.Add(resp.Value.id, resp.Value.hour, resp.Value.name, resp.Value.dish);
+                        }
+                    }
+                    break;
+                default:
+                    CustomMessageBox.Show("Error desconocido", CustomMessageBoxType.Error);
+                    break;
             }
         }
 
@@ -57,7 +84,7 @@ namespace GestorDeConsumo.Views.UserControllers
             DataGridViewRow currentRow = TableConsumption.Rows[e.RowIndex];
             if (e.ColumnIndex == 4)
             {
-                DialogResult response = ConfirmMessageBox.Show("¿Estás seguro de querer eliminar el registro de este consumo?");
+                DialogResult response = CustomMessageBox.Show("¿Estás seguro de querer eliminar el registro de este consumo?", CustomMessageBoxType.Confirm);
                 if (response == DialogResult.OK)
                 {
                     string stringId = currentRow.Cells[0].Value.ToString() ?? "-1";

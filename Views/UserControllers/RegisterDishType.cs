@@ -50,7 +50,7 @@ namespace GestorDeConsumo.Views.UserControllers
             DataGridViewRow currentRow = TableDishType.Rows[e.RowIndex];
             if (e.ColumnIndex == 3)
             {
-                DialogResult response = ConfirmMessageBox.Show("¿Estás seguro de querer eliminar este platillo?");
+                DialogResult response = CustomMessageBox.Show("¿Estás seguro de querer eliminar este platillo?", CustomMessageBoxType.Confirm);
                 if (response == DialogResult.OK)
                 {
                     string stringId = currentRow.Cells[0].Value.ToString() ?? "-1";

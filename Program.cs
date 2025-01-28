@@ -32,7 +32,6 @@ namespace GestorDeConsumo
             }
             DishTypeController.UpdateDishTypesEnum();
 
-            //ApplicationConfiguration.Initialize();
             Application.Run(new HomePage());
         }
     }

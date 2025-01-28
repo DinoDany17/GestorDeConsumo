@@ -1,5 +1,6 @@
 ﻿using GestorDeConsumo.Controllers;
 using GestorDeConsumo.Database.Models;
+using GestorDeConsumo.Views.Fingerprint;
 using GestorDeConsumo.Views.UserControllers.MessageBoxes;
 
 namespace GestorDeConsumo.Views.UserControllers
@@ -23,12 +24,41 @@ namespace GestorDeConsumo.Views.UserControllers
 
         private void ButtonFingerprint_Click(object sender, EventArgs e)
         {
-            string nameTrimmed = TextBoxName.Text.Trim();
-            Employee? newEmployee = EmployeeController.RegisterEmployee(nameTrimmed, new byte[0]);
-            if (newEmployee != null)
+            byte[] fingerprint = new byte[0];
+            CaptureFingerprint fingerprintCapture = new CaptureFingerprint();
+            fingerprintCapture.OnTemplate += (DPFP.Template? template) =>
             {
-                TableEmployee.Rows.Add(newEmployee.id, newEmployee.name);
-                TextBoxName.Text = "";
+                if (template != null)
+                {
+                    fingerprint = new byte[template.Bytes.Length];
+                    template.Serialize(ref fingerprint);
+                }
+                else
+                {
+                    CustomMessageBox.Show("No se pudo capturar la huella", CustomMessageBoxType.Error);
+                }
+            };
+            DialogResult result = fingerprintCapture.ShowDialog();
+            switch (result)
+            {
+                case DialogResult.Abort:
+                    CustomMessageBox.Show("No se pudo iniciar la captura", CustomMessageBoxType.Error);
+                    break;
+                case DialogResult.Cancel:
+                    CustomMessageBox.Show("La captura fue cancelada por el usuario", CustomMessageBoxType.Warning);
+                    break;
+                case DialogResult.OK:
+                    string nameTrimmed = TextBoxName.Text.Trim();
+                    Employee? newEmployee = EmployeeController.RegisterEmployee(nameTrimmed, fingerprint);
+                    if (newEmployee != null)
+                    {
+                        TableEmployee.Rows.Add(newEmployee.id, newEmployee.name);
+                        TextBoxName.Text = "";
+                    }
+                    break;
+                default:
+                    CustomMessageBox.Show("Error desconocido", CustomMessageBoxType.Error);
+                    break;
             }
         }
 
@@ -48,9 +78,9 @@ namespace GestorDeConsumo.Views.UserControllers
         private void TableEmployee_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
             DataGridViewRow currentRow = TableEmployee.Rows[e.RowIndex];
-            if (e.ColumnIndex == 3)
+            if (e.ColumnIndex == 2)
             {
-                DialogResult response = ConfirmMessageBox.Show("¿Estás seguro de querer eliminar el registro de este empleado?");
+                DialogResult response = CustomMessageBox.Show("¿Estás seguro de querer eliminar el registro de este empleado?", CustomMessageBoxType.Confirm);
                 if (response == DialogResult.OK)
                 {
                     string stringId = currentRow.Cells[0].Value.ToString() ?? "-1";
@@ -86,22 +116,22 @@ namespace GestorDeConsumo.Views.UserControllers
                 string? value = currentCell.Value?.ToString();
                 if (string.IsNullOrEmpty(value) || value.Length <= 3)
                 {
-                    currentCell.Value = originalCellValue;
-                    Console.WriteLine("El nombre es demasiado corto.");
+                    currentCell.Value = originalCellValue; 
+                    CustomMessageBox.Show("El nombre es demasiado corto", CustomMessageBoxType.Warning);
                     return;
                 }
                 int id = int.TryParse(currentRow.Cells[0].Value?.ToString(), out var parsedId) ? parsedId : -1;
                 if (id == -1)
                 {
                     currentCell.Value = originalCellValue;
-                    Console.WriteLine("ID inválido.");
+                    CustomMessageBox.Show("Id inválido", CustomMessageBoxType.Error);
                     return;
                 }
                 bool success = EmployeeController.UpdateEmployee(id, currentColumn.Name, value);
                 if (!success)
                 {
                     currentCell.Value = originalCellValue;
-                    Console.WriteLine("Error al actualizar el empleado.");
+                    CustomMessageBox.Show("Error al actualizar el empleado", CustomMessageBoxType.Error);
                 }
             }
 

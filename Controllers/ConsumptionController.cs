@@ -5,7 +5,7 @@ namespace GestorDeConsumo.Controllers
 {
     public static class ConsumptionController
     {
-        public static (int, string, string, string)? RegisterConsumption(string dishName)
+        public static (int, string, string, string)? RegisterConsumption(string dishName, Employee employee)
         {
             DateTime dateTime = DateTime.Now;
             string timeStamp = dateTime.ToString("yyyy-MM-dd HH:mm:ss");
@@ -13,10 +13,9 @@ namespace GestorDeConsumo.Controllers
             DishType? dish = DishTypeRepository.GetByName(dishName);
             if (dish != null)
             {
-                Consumption? newConsumption = ConsumptionRepository.Insert(1, dish.id, timeStamp);
+                Consumption? newConsumption = ConsumptionRepository.Insert(employee.id, dish.id, timeStamp);
                 if (newConsumption != null)
                 {
-                    Employee? employee = EmployeeRepository.GetById(newConsumption.employee_id);
                     if (employee != null)
                     {
                         return (newConsumption.id, hour, employee.name, dish.name);

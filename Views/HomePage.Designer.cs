@@ -34,7 +34,7 @@
             ButtonDishes = new Button();
             ButtonCreateEmployee = new Button();
             ButtonHome = new Button();
-            Top = new Panel();
+            TopPanel = new Panel();
             MinimizeButton = new Button();
             WindowButton = new Button();
             CloseButton = new Button();
@@ -43,7 +43,7 @@
             RegisterEmployeeInstance = new UserControllers.RegisterEmployee();
             RegisterDishTypeInstance = new UserControllers.RegisterDishType();
             SideBar.SuspendLayout();
-            Top.SuspendLayout();
+            TopPanel.SuspendLayout();
             SuspendLayout();
             // 
             // SideBar
@@ -131,17 +131,17 @@
             ButtonHome.UseVisualStyleBackColor = false;
             ButtonHome.Click += ButtonHome_Click;
             // 
-            // Top
+            // TopPanel
             // 
-            Top.BackColor = Color.FromArgb(224, 145, 50);
-            Top.Controls.Add(MinimizeButton);
-            Top.Controls.Add(WindowButton);
-            Top.Controls.Add(CloseButton);
-            Top.Dock = DockStyle.Top;
-            Top.Location = new Point(155, 0);
-            Top.Name = "Top";
-            Top.Size = new Size(1045, 35);
-            Top.TabIndex = 1;
+            TopPanel.BackColor = Color.FromArgb(224, 145, 50);
+            TopPanel.Controls.Add(MinimizeButton);
+            TopPanel.Controls.Add(WindowButton);
+            TopPanel.Controls.Add(CloseButton);
+            TopPanel.Dock = DockStyle.Top;
+            TopPanel.Location = new Point(155, 0);
+            TopPanel.Name = "TopPanel";
+            TopPanel.Size = new Size(1045, 35);
+            TopPanel.TabIndex = 1;
             // 
             // MinimizeButton
             // 
@@ -235,7 +235,7 @@
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1200, 600);
             Controls.Add(MainPanel);
-            Controls.Add(Top);
+            Controls.Add(TopPanel);
             Controls.Add(SideBar);
             FormBorderStyle = FormBorderStyle.None;
             Name = "HomePage";
@@ -243,14 +243,14 @@
             Text = "Gestor de consumo";
             Load += HomePage_Load;
             SideBar.ResumeLayout(false);
-            Top.ResumeLayout(false);
+            TopPanel.ResumeLayout(false);
             ResumeLayout(false);
         }
 
         #endregion
 
         private Panel SideBar;
-        private Panel Top;
+        private Panel TopPanel;
         private Panel MainPanel;
         private Button ButtonHome;
         private Button ButtonInfo;
