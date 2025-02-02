@@ -88,7 +88,7 @@
             TableDishType.AllowUserToResizeColumns = false;
             TableDishType.AllowUserToResizeRows = false;
             TableDishType.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            TableDishType.BackgroundColor = SystemColors.ControlLight;
+            TableDishType.BackgroundColor = Color.Gray;
             TableDishType.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             TableDishType.Columns.AddRange(new DataGridViewColumn[] { Id, name, cost, Delete });
             TableDishType.EditMode = DataGridViewEditMode.EditOnKeystroke;

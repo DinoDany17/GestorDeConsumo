@@ -31,6 +31,16 @@ namespace GestorDeConsumo.Views
             MoveInstanceToPanel(RegisterDishTypeInstance);
         }
 
+        private void ButtonReports_Click(object sender, EventArgs e)
+        {
+            MoveInstanceToPanel(ReportGenerationInstance);
+        }
+
+        private void ButtonBackup_Click(object sender, EventArgs e)
+        {
+            MoveInstanceToPanel(BackupRestoreInstance);
+        }
+
         private void MoveInstanceToPanel(Control control)
         {
             MainPanel.Controls.Clear();

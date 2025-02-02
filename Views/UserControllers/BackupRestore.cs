@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace GestorDeConsumo.Views.UserControllers
 {
-    public partial class RegisterReport : UserControl
+    public partial class BackupRestore : UserControl
     {
-        public RegisterReport()
+        public BackupRestore()
         {
             InitializeComponent();
         }

@@ -54,7 +54,7 @@
             TableConsumption.AllowUserToResizeColumns = false;
             TableConsumption.AllowUserToResizeRows = false;
             TableConsumption.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            TableConsumption.BackgroundColor = SystemColors.ControlLight;
+            TableConsumption.BackgroundColor = Color.Gray;
             TableConsumption.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             TableConsumption.Columns.AddRange(new DataGridViewColumn[] { Id, Hora, Empleado, Platillo, Eliminar });
             TableConsumption.EditMode = DataGridViewEditMode.EditProgrammatically;

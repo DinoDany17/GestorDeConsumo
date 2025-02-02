@@ -39,7 +39,7 @@
             // 
             // FingerprintPictureBox
             // 
-            FingerprintPictureBox.BackColor = SystemColors.ButtonHighlight;
+            FingerprintPictureBox.BackColor = Color.Gray;
             FingerprintPictureBox.Location = new Point(12, 50);
             FingerprintPictureBox.Name = "FingerprintPictureBox";
             FingerprintPictureBox.Size = new Size(379, 426);
@@ -58,7 +58,7 @@
             // 
             // LogBox
             // 
-            LogBox.BackColor = SystemColors.ButtonHighlight;
+            LogBox.BackColor = Color.Gray;
             LogBox.Location = new Point(416, 93);
             LogBox.Name = "LogBox";
             LogBox.ReadOnly = true;

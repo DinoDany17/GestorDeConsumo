@@ -30,21 +30,29 @@ namespace GestorDeConsumo.Controllers
             return ConsumptionRepository.GetAll();
         }
 
-        public static (int, string, string, string)[] GetConsumptionsForTable()
+        public static ConsumptionTableRow[] GetConsumptionsForTable()
         {
             string today = DateTime.Now.ToString("yyyy-MM-dd");
             Consumption[] consumptions = ConsumptionRepository.GetAll($"date LIKE ('{today}%')");
-            List<(int, string, string, string)> formattedConsumption = new List<(int, string, string, string)>();
+            List<ConsumptionTableRow> formattedConsumption = new List<ConsumptionTableRow>();
             for (int i = 0; i < consumptions.Length; i++)
             {
                 Employee? employee = EmployeeRepository.GetById(consumptions[i].employee_id);
                 DishType? dishType = DishTypeRepository.GetById(consumptions[i].dish_type_id);
                 if (employee != null && dishType != null)
                 {
-                    formattedConsumption.Add((consumptions[i].id, consumptions[i].date.ToString("HH:mm:ss"), employee.name, dishType.name));
+                    formattedConsumption.Add(new ConsumptionTableRow(consumptions[i].id, consumptions[i].date.ToString("HH:mm:ss"), employee.name, dishType.name));
                 }
             }
             return formattedConsumption.ToArray();
+        }
+
+        public static ConsumptionReportRow[] GetConsumptionReport(DateTime startDay, DateTime endDay)
+        {
+            string start = startDay.ToString("yyyy-MM-dd");
+            string end = endDay.ToString("yyyy-MM-dd");
+            return ConsumptionRepository.GetConsumptionsForReport(start, end);
+            
         }
 
         public static bool DeleteConsumption(int id)

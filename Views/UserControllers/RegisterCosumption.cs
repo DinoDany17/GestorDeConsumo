@@ -19,9 +19,9 @@ namespace GestorDeConsumo.Views.UserControllers
             {
                 ComboBoxDishType.Items.Add(name);
             }
-            foreach ((int id, string hour, string employee_name, string dish) in ConsumptionController.GetConsumptionsForTable())
+            foreach (ConsumptionTableRow tb in ConsumptionController.GetConsumptionsForTable())
             {
-                TableConsumption.Rows.Add(id, hour, employee_name, dish);
+                TableConsumption.Rows.Add(tb.id, tb.hour, tb.employee, tb.dish);
             }
         }
 

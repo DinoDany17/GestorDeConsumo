@@ -1,6 +1,6 @@
 ﻿namespace GestorDeConsumo.Views.UserControllers
 {
-    partial class RegisterReport
+    partial class BackupRestore
     {
         /// <summary> 
         /// Variable del diseñador necesaria.
@@ -28,8 +28,15 @@
         /// </summary>
         private void InitializeComponent()
         {
-            components = new System.ComponentModel.Container();
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            SuspendLayout();
+            // 
+            // BackupRestore
+            // 
+            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleMode = AutoScaleMode.Font;
+            Name = "BackupRestore";
+            Size = new Size(1045, 565);
+            ResumeLayout(false);
         }
 
         #endregion

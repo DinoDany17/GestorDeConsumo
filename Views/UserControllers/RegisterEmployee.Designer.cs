@@ -66,7 +66,7 @@
             TableEmployee.AllowUserToResizeColumns = false;
             TableEmployee.AllowUserToResizeRows = false;
             TableEmployee.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            TableEmployee.BackgroundColor = SystemColors.ControlLight;
+            TableEmployee.BackgroundColor = Color.Gray;
             TableEmployee.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             TableEmployee.Columns.AddRange(new DataGridViewColumn[] { id, name, delete });
             TableEmployee.EditMode = DataGridViewEditMode.EditOnKeystroke;

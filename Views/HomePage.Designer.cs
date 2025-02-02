@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             SideBar = new Panel();
+            ButtonBackup = new Button();
             ButtonInfo = new Button();
             ButtonReports = new Button();
             ButtonDishes = new Button();
@@ -39,16 +40,20 @@
             WindowButton = new Button();
             CloseButton = new Button();
             MainPanel = new Panel();
+            BackupRestoreInstance = new UserControllers.BackupRestore();
             RegisterConsumptionInstance = new UserControllers.RegisterCosumption();
             RegisterEmployeeInstance = new UserControllers.RegisterEmployee();
             RegisterDishTypeInstance = new UserControllers.RegisterDishType();
+            ReportGenerationInstance = new UserControllers.ReportGeneration();
             SideBar.SuspendLayout();
             TopPanel.SuspendLayout();
+            MainPanel.SuspendLayout();
             SuspendLayout();
             // 
             // SideBar
             // 
             SideBar.BackColor = Color.FromArgb(66, 69, 48);
+            SideBar.Controls.Add(ButtonBackup);
             SideBar.Controls.Add(ButtonInfo);
             SideBar.Controls.Add(ButtonReports);
             SideBar.Controls.Add(ButtonDishes);
@@ -59,6 +64,21 @@
             SideBar.Name = "SideBar";
             SideBar.Size = new Size(155, 600);
             SideBar.TabIndex = 2;
+            // 
+            // ButtonBackup
+            // 
+            ButtonBackup.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            ButtonBackup.BackColor = Color.Transparent;
+            ButtonBackup.FlatAppearance.BorderSize = 0;
+            ButtonBackup.FlatStyle = FlatStyle.Flat;
+            ButtonBackup.ForeColor = Color.FromArgb(165, 142, 116);
+            ButtonBackup.Location = new Point(0, 225);
+            ButtonBackup.Name = "ButtonBackup";
+            ButtonBackup.Size = new Size(155, 40);
+            ButtonBackup.TabIndex = 5;
+            ButtonBackup.Text = "Base de datos";
+            ButtonBackup.UseVisualStyleBackColor = false;
+            ButtonBackup.Click += ButtonBackup_Click;
             // 
             // ButtonInfo
             // 
@@ -79,12 +99,13 @@
             ButtonReports.FlatAppearance.BorderSize = 0;
             ButtonReports.FlatStyle = FlatStyle.Flat;
             ButtonReports.ForeColor = Color.FromArgb(165, 142, 116);
-            ButtonReports.Location = new Point(0, 176);
+            ButtonReports.Location = new Point(0, 182);
             ButtonReports.Name = "ButtonReports";
             ButtonReports.Size = new Size(155, 40);
             ButtonReports.TabIndex = 1;
             ButtonReports.Text = "Reportes";
             ButtonReports.UseVisualStyleBackColor = false;
+            ButtonReports.Click += ButtonReports_Click;
             // 
             // ButtonDishes
             // 
@@ -93,7 +114,7 @@
             ButtonDishes.FlatAppearance.BorderSize = 0;
             ButtonDishes.FlatStyle = FlatStyle.Flat;
             ButtonDishes.ForeColor = Color.FromArgb(165, 142, 116);
-            ButtonDishes.Location = new Point(0, 135);
+            ButtonDishes.Location = new Point(0, 139);
             ButtonDishes.Name = "ButtonDishes";
             ButtonDishes.Size = new Size(155, 40);
             ButtonDishes.TabIndex = 2;
@@ -108,7 +129,7 @@
             ButtonCreateEmployee.FlatAppearance.BorderSize = 0;
             ButtonCreateEmployee.FlatStyle = FlatStyle.Flat;
             ButtonCreateEmployee.ForeColor = Color.FromArgb(165, 142, 116);
-            ButtonCreateEmployee.Location = new Point(0, 94);
+            ButtonCreateEmployee.Location = new Point(0, 96);
             ButtonCreateEmployee.Name = "ButtonCreateEmployee";
             ButtonCreateEmployee.Size = new Size(155, 40);
             ButtonCreateEmployee.TabIndex = 3;
@@ -154,7 +175,7 @@
             MinimizeButton.FlatAppearance.BorderSize = 0;
             MinimizeButton.FlatStyle = FlatStyle.Flat;
             MinimizeButton.Font = new Font("Segoe UI", 16F, FontStyle.Bold, GraphicsUnit.Point);
-            MinimizeButton.ForeColor = SystemColors.ButtonFace;
+            MinimizeButton.ForeColor = Color.Gray;
             MinimizeButton.Image = Properties.Resources.minimize;
             MinimizeButton.Location = new Point(934, 0);
             MinimizeButton.Name = "MinimizeButton";
@@ -172,7 +193,7 @@
             WindowButton.FlatAppearance.BorderSize = 0;
             WindowButton.FlatStyle = FlatStyle.Flat;
             WindowButton.Font = new Font("Segoe UI", 16F, FontStyle.Bold, GraphicsUnit.Point);
-            WindowButton.ForeColor = SystemColors.ButtonFace;
+            WindowButton.ForeColor = Color.Gray;
             WindowButton.Image = Properties.Resources.fullscreen;
             WindowButton.Location = new Point(972, 0);
             WindowButton.Name = "WindowButton";
@@ -190,7 +211,7 @@
             CloseButton.FlatAppearance.BorderSize = 0;
             CloseButton.FlatStyle = FlatStyle.Flat;
             CloseButton.Font = new Font("Segoe UI", 14F, FontStyle.Bold, GraphicsUnit.Point);
-            CloseButton.ForeColor = SystemColors.ButtonFace;
+            CloseButton.ForeColor = Color.Gray;
             CloseButton.Image = Properties.Resources.close;
             CloseButton.Location = new Point(1010, 0);
             CloseButton.Name = "CloseButton";
@@ -207,6 +228,14 @@
             MainPanel.Name = "MainPanel";
             MainPanel.Size = new Size(1045, 565);
             MainPanel.TabIndex = 0;
+            // 
+            // BackupRestoreInstance
+            // 
+            BackupRestoreInstance.Dock = DockStyle.Fill;
+            BackupRestoreInstance.Location = new Point(0, 0);
+            BackupRestoreInstance.Name = "BackupRestoreInstance";
+            BackupRestoreInstance.Size = new Size(1045, 565);
+            BackupRestoreInstance.TabIndex = 0;
             // 
             // RegisterConsumptionInstance
             // 
@@ -232,6 +261,14 @@
             RegisterDishTypeInstance.Size = new Size(1045, 565);
             RegisterDishTypeInstance.TabIndex = 0;
             // 
+            // ReportGenerationInstance
+            // 
+            ReportGenerationInstance.Dock = DockStyle.Fill;
+            ReportGenerationInstance.Location = new Point(0, 0);
+            ReportGenerationInstance.Name = "ReportGenerationInstance";
+            ReportGenerationInstance.Size = new Size(1045, 565);
+            ReportGenerationInstance.TabIndex = 0;
+            // 
             // HomePage
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -247,6 +284,7 @@
             Load += HomePage_Load;
             SideBar.ResumeLayout(false);
             TopPanel.ResumeLayout(false);
+            MainPanel.ResumeLayout(false);
             ResumeLayout(false);
         }
 
@@ -266,5 +304,8 @@
         private Button WindowButton;
         private Button CloseButton;
         private Button MinimizeButton;
+        private UserControllers.BackupRestore BackupRestoreInstance;
+        private Button ButtonBackup;
+        private UserControllers.ReportGeneration ReportGenerationInstance;
     }
 }
