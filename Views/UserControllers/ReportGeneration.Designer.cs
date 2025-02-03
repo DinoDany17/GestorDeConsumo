@@ -134,6 +134,7 @@
             // 
             // RangeLabel
             // 
+            RangeLabel.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             RangeLabel.AutoSize = true;
             RangeLabel.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point);
             RangeLabel.Location = new Point(764, 232);

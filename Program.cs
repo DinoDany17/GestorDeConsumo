@@ -4,6 +4,11 @@ using GestorDeConsumo.Views;
 
 namespace GestorDeConsumo
 {
+    /**
+     *  Coded by: Daniel Ivan Rodriguez Espinoza
+     *  Date: 02/02/2025
+     *  Email: danielivanrodriguezespinoza@gmail.com
+     */
     internal static class Program
     {
         /// <summary>

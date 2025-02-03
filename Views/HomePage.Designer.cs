@@ -30,7 +30,6 @@
         {
             SideBar = new Panel();
             ButtonBackup = new Button();
-            ButtonInfo = new Button();
             ButtonReports = new Button();
             ButtonDishes = new Button();
             ButtonCreateEmployee = new Button();
@@ -47,14 +46,12 @@
             ReportGenerationInstance = new UserControllers.ReportGeneration();
             SideBar.SuspendLayout();
             TopPanel.SuspendLayout();
-            MainPanel.SuspendLayout();
             SuspendLayout();
             // 
             // SideBar
             // 
             SideBar.BackColor = Color.FromArgb(66, 69, 48);
             SideBar.Controls.Add(ButtonBackup);
-            SideBar.Controls.Add(ButtonInfo);
             SideBar.Controls.Add(ButtonReports);
             SideBar.Controls.Add(ButtonDishes);
             SideBar.Controls.Add(ButtonCreateEmployee);
@@ -79,18 +76,6 @@
             ButtonBackup.Text = "Base de datos";
             ButtonBackup.UseVisualStyleBackColor = false;
             ButtonBackup.Click += ButtonBackup_Click;
-            // 
-            // ButtonInfo
-            // 
-            ButtonInfo.BackgroundImageLayout = ImageLayout.Zoom;
-            ButtonInfo.FlatAppearance.BorderSize = 0;
-            ButtonInfo.FlatStyle = FlatStyle.Flat;
-            ButtonInfo.Location = new Point(0, 568);
-            ButtonInfo.Name = "ButtonInfo";
-            ButtonInfo.Size = new Size(32, 32);
-            ButtonInfo.TabIndex = 0;
-            ButtonInfo.Text = "Inf";
-            ButtonInfo.UseVisualStyleBackColor = true;
             // 
             // ButtonReports
             // 
@@ -284,7 +269,6 @@
             Load += HomePage_Load;
             SideBar.ResumeLayout(false);
             TopPanel.ResumeLayout(false);
-            MainPanel.ResumeLayout(false);
             ResumeLayout(false);
         }
 
@@ -294,7 +278,6 @@
         private Panel TopPanel;
         private Panel MainPanel;
         private Button ButtonHome;
-        private Button ButtonInfo;
         private Button ButtonReports;
         private Button ButtonDishes;
         private Button ButtonCreateEmployee;
