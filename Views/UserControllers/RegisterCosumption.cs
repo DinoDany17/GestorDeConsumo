@@ -3,6 +3,7 @@ using GestorDeConsumo.Views.UserControllers.MessageBoxes;
 using GestorDeConsumo.Views.Fingerprint;
 using GestorDeConsumo.Database.Models;
 using System.Windows.Forms;
+using GestorDeConsumo.Utils;
 
 namespace GestorDeConsumo.Views.UserControllers
 {

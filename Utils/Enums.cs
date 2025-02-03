@@ -1,6 +1,6 @@
 ﻿using GestorDeConsumo.Database.Models;
 
-namespace GestorDeConsumo
+namespace GestorDeConsumo.Utils
 {
     internal static class Enums
     {

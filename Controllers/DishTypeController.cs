@@ -1,5 +1,6 @@
 ﻿using GestorDeConsumo.Database.Models;
 using GestorDeConsumo.Database.Repositories;
+using GestorDeConsumo.Utils;
 
 namespace GestorDeConsumo.Controllers
 {
