@@ -116,7 +116,7 @@ namespace GestorDeConsumo.Views.UserControllers
                 string? value = currentCell.Value?.ToString();
                 if (string.IsNullOrEmpty(value) || value.Length <= 3)
                 {
-                    currentCell.Value = originalCellValue; 
+                    currentCell.Value = originalCellValue;
                     CustomMessageBox.Show("El nombre es demasiado corto", CustomMessageBoxType.Warning);
                     return;
                 }
@@ -136,6 +136,22 @@ namespace GestorDeConsumo.Views.UserControllers
             }
 
             originalCellValue = string.Empty;
+        }
+
+        private void TableEmployee_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
+        {
+            if (e.ColumnIndex == 0)
+            {
+                e.AdvancedBorderStyle.Left = DataGridViewAdvancedCellBorderStyle.None;
+            }
+            if (e.ColumnIndex == 2)
+            {
+                e.AdvancedBorderStyle.Right = DataGridViewAdvancedCellBorderStyle.None;
+            }
+            if (e.RowIndex == -1)
+            {
+                e.AdvancedBorderStyle.Top = DataGridViewAdvancedCellBorderStyle.None;
+            }
         }
     }
 }

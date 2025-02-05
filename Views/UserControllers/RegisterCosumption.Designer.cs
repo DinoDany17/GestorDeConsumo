@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
+            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
             databaseConnectionBindingSource = new BindingSource(components);
             TableConsumption = new DataGridView();
             ComboBoxDishType = new ComboBox();
@@ -54,20 +55,33 @@
             TableConsumption.AllowUserToResizeColumns = false;
             TableConsumption.AllowUserToResizeRows = false;
             TableConsumption.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            TableConsumption.BackgroundColor = Color.Gray;
+            TableConsumption.BackgroundColor = Color.White;
+            TableConsumption.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
+            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = Color.FromArgb(66, 69, 48);
+            dataGridViewCellStyle1.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle1.ForeColor = Color.FromArgb(255, 239, 205);
+            dataGridViewCellStyle1.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = DataGridViewTriState.False;
+            TableConsumption.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             TableConsumption.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             TableConsumption.Columns.AddRange(new DataGridViewColumn[] { Id, Hora, Empleado, Platillo, Eliminar });
             TableConsumption.EditMode = DataGridViewEditMode.EditProgrammatically;
+            TableConsumption.GridColor = SystemColors.ActiveCaptionText;
             TableConsumption.Location = new Point(19, 76);
             TableConsumption.Name = "TableConsumption";
+            TableConsumption.RowHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
             TableConsumption.RowHeadersVisible = false;
             TableConsumption.RowTemplate.Height = 25;
             TableConsumption.Size = new Size(1006, 468);
             TableConsumption.TabIndex = 0;
             TableConsumption.CellContentClick += TableConsumption_CellContentClick;
+            TableConsumption.CellPainting += TableConsumption_CellPainting;
             // 
             // ComboBoxDishType
             // 
+            ComboBoxDishType.BackColor = Color.White;
             ComboBoxDishType.DropDownHeight = 110;
             ComboBoxDishType.FlatStyle = FlatStyle.Flat;
             ComboBoxDishType.FormattingEnabled = true;
@@ -76,29 +90,34 @@
             ComboBoxDishType.Location = new Point(19, 40);
             ComboBoxDishType.Name = "ComboBoxDishType";
             ComboBoxDishType.Size = new Size(199, 23);
-            ComboBoxDishType.TabIndex = 1;
+            ComboBoxDishType.TabIndex = 2;
             ComboBoxDishType.SelectedIndexChanged += ComboBoxDishType_SelectedIndexChanged;
             ComboBoxDishType.Click += ComboBoxDishType_Click;
             // 
             // LabelDishType
             // 
             LabelDishType.AutoSize = true;
+            LabelDishType.BackColor = Color.Transparent;
             LabelDishType.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point);
             LabelDishType.Location = new Point(19, 22);
             LabelDishType.Name = "LabelDishType";
             LabelDishType.Size = new Size(88, 15);
-            LabelDishType.TabIndex = 2;
+            LabelDishType.TabIndex = 1;
             LabelDishType.Text = "Tipo de platillo";
             // 
             // ButtonFingerprint
             // 
+            ButtonFingerprint.BackColor = Color.FromArgb(165, 142, 116);
             ButtonFingerprint.Enabled = false;
-            ButtonFingerprint.Location = new Point(224, 39);
+            ButtonFingerprint.FlatAppearance.BorderSize = 0;
+            ButtonFingerprint.FlatStyle = FlatStyle.Flat;
+            ButtonFingerprint.ForeColor = Color.FromArgb(255, 239, 205);
+            ButtonFingerprint.Location = new Point(235, 40);
             ButtonFingerprint.Name = "ButtonFingerprint";
             ButtonFingerprint.Size = new Size(199, 23);
             ButtonFingerprint.TabIndex = 2;
             ButtonFingerprint.Text = "Leer huella digital";
-            ButtonFingerprint.UseVisualStyleBackColor = true;
+            ButtonFingerprint.UseVisualStyleBackColor = false;
             ButtonFingerprint.Click += ButtonFingerprint_Click;
             // 
             // Id
@@ -133,16 +152,21 @@
             Eliminar.HeaderText = "";
             Eliminar.Name = "Eliminar";
             Eliminar.ReadOnly = true;
-            Eliminar.Text = "X";
             Eliminar.Width = 50;
+            Eliminar.FlatStyle = FlatStyle.Flat;
+            Eliminar.DefaultCellStyle.BackColor = Color.FromArgb(165, 142, 116);
+            Eliminar.DefaultCellStyle.ForeColor = Color.FromArgb(255, 239, 205);
+            Eliminar.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            Eliminar.Text = "X";
+            Eliminar.UseColumnTextForButtonValue = true;
             // 
             // RegisterCosumption
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
+            Controls.Add(ComboBoxDishType);
             Controls.Add(ButtonFingerprint);
             Controls.Add(LabelDishType);
-            Controls.Add(ComboBoxDishType);
             Controls.Add(TableConsumption);
             Name = "RegisterCosumption";
             Size = new Size(1045, 565);

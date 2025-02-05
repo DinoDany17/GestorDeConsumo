@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(HomePage));
             SideBar = new Panel();
             ButtonBackup = new Button();
             ButtonReports = new Button();
@@ -263,6 +264,7 @@
             Controls.Add(TopPanel);
             Controls.Add(SideBar);
             FormBorderStyle = FormBorderStyle.None;
+            Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "HomePage";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Gestor de consumo";

@@ -28,6 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
+            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
             ButtonAddDishType = new Button();
             LabelDishType = new Label();
             DishTypeTextBox = new TextBox();
@@ -44,13 +47,17 @@
             // 
             // ButtonAddDishType
             // 
+            ButtonAddDishType.BackColor = Color.FromArgb(165, 142, 116);
             ButtonAddDishType.Enabled = false;
+            ButtonAddDishType.FlatAppearance.BorderSize = 0;
+            ButtonAddDishType.FlatStyle = FlatStyle.Flat;
+            ButtonAddDishType.ForeColor = Color.FromArgb(255, 239, 205);
             ButtonAddDishType.Location = new Point(361, 38);
             ButtonAddDishType.Name = "ButtonAddDishType";
             ButtonAddDishType.Size = new Size(131, 23);
             ButtonAddDishType.TabIndex = 3;
             ButtonAddDishType.Text = "Agregar platillo";
-            ButtonAddDishType.UseVisualStyleBackColor = true;
+            ButtonAddDishType.UseVisualStyleBackColor = false;
             ButtonAddDishType.Click += ButtonAddDishType_Click;
             // 
             // LabelDishType
@@ -65,6 +72,8 @@
             // 
             // DishTypeTextBox
             // 
+            DishTypeTextBox.BackColor = Color.White;
+            DishTypeTextBox.BorderStyle = BorderStyle.FixedSingle;
             DishTypeTextBox.Location = new Point(19, 39);
             DishTypeTextBox.Name = "DishTypeTextBox";
             DishTypeTextBox.Size = new Size(199, 23);
@@ -88,12 +97,23 @@
             TableDishType.AllowUserToResizeColumns = false;
             TableDishType.AllowUserToResizeRows = false;
             TableDishType.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            TableDishType.BackgroundColor = Color.Gray;
+            TableDishType.BackgroundColor = Color.White;
+            TableDishType.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
+            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = Color.FromArgb(66, 69, 48);
+            dataGridViewCellStyle1.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle1.ForeColor = Color.FromArgb(255, 239, 205);
+            dataGridViewCellStyle1.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
+            TableDishType.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             TableDishType.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             TableDishType.Columns.AddRange(new DataGridViewColumn[] { Id, name, cost, Delete });
             TableDishType.EditMode = DataGridViewEditMode.EditOnKeystroke;
+            TableDishType.GridColor = SystemColors.ActiveCaptionText;
             TableDishType.Location = new Point(19, 76);
             TableDishType.Name = "TableDishType";
+            TableDishType.RowHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
             TableDishType.RowHeadersVisible = false;
             TableDishType.RowTemplate.Height = 25;
             TableDishType.Size = new Size(1006, 468);
@@ -101,9 +121,12 @@
             TableDishType.CellBeginEdit += TableDishType_CellBeginEdit;
             TableDishType.CellContentClick += TableDishType_CellContentClick;
             TableDishType.CellEndEdit += TableDishType_CellEndEdit;
+            TableDishType.CellPainting += TableDishType_CellPainting;
             // 
             // CostNumericDropDown
             // 
+            CostNumericDropDown.BackColor = Color.White;
+            CostNumericDropDown.BorderStyle = BorderStyle.FixedSingle;
             CostNumericDropDown.DecimalPlaces = 2;
             CostNumericDropDown.Location = new Point(224, 39);
             CostNumericDropDown.Maximum = new decimal(new int[] { 9999, 0, 0, 0 });
@@ -128,6 +151,8 @@
             // 
             // cost
             // 
+            dataGridViewCellStyle2.NullValue = null;
+            cost.DefaultCellStyle = dataGridViewCellStyle2;
             cost.HeaderText = "Costo";
             cost.Name = "cost";
             cost.Resizable = DataGridViewTriState.True;
@@ -135,10 +160,16 @@
             // 
             // Delete
             // 
+            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle3.BackColor = Color.FromArgb(165, 142, 116);
+            dataGridViewCellStyle3.ForeColor = Color.FromArgb(255, 239, 205);
+            Delete.DefaultCellStyle = dataGridViewCellStyle3;
+            Delete.FlatStyle = FlatStyle.Flat;
             Delete.HeaderText = "";
             Delete.Name = "Delete";
             Delete.ReadOnly = true;
             Delete.Text = "X";
+            Delete.UseColumnTextForButtonValue = true;
             Delete.Width = 50;
             // 
             // RegisterDishType

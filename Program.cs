@@ -19,13 +19,12 @@ namespace GestorDeConsumo
         {
             //Get the current directory of the application
             string appDirectory = Directory.GetCurrentDirectory();
-            string cleanAppDirectory = appDirectory.Split("bin")[0];
 
             //Create the .env file if it does not exist and read the environment variables
-            string envPath = Path.Combine(cleanAppDirectory, ".env");
+            string envPath = Path.Combine(appDirectory, ".env");
             if (!File.Exists(envPath))
             {
-                File.WriteAllText(envPath, "APP_DIRECTORY=" + cleanAppDirectory);
+                File.WriteAllText(envPath, "APP_DIRECTORY=" + appDirectory);
             }
             DotEnv.Load(new DotEnvOptions(envFilePaths: new List<String> { envPath }));
 

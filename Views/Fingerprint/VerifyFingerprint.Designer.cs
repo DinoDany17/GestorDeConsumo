@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(VerifyFingerprint));
             CloseButton = new Button();
             TitleLabel = new Label();
             FingerprintPictureBox = new PictureBox();
@@ -38,12 +39,16 @@
             // 
             // CloseButton
             // 
+            CloseButton.BackColor = Color.FromArgb(165, 142, 116);
+            CloseButton.FlatAppearance.BorderSize = 0;
+            CloseButton.FlatStyle = FlatStyle.Flat;
+            CloseButton.ForeColor = Color.FromArgb(255, 239, 205);
             CloseButton.Location = new Point(316, 545);
             CloseButton.Name = "CloseButton";
             CloseButton.Size = new Size(75, 23);
             CloseButton.TabIndex = 1;
             CloseButton.Text = "Cerrar";
-            CloseButton.UseVisualStyleBackColor = true;
+            CloseButton.UseVisualStyleBackColor = false;
             CloseButton.Click += CloseButton_Click;
             // 
             // TitleLabel
@@ -58,7 +63,7 @@
             // 
             // FingerprintPictureBox
             // 
-            FingerprintPictureBox.BackColor = Color.Gray;
+            FingerprintPictureBox.BackColor = Color.White;
             FingerprintPictureBox.Location = new Point(12, 113);
             FingerprintPictureBox.Name = "FingerprintPictureBox";
             FingerprintPictureBox.Size = new Size(379, 426);
@@ -67,7 +72,9 @@
             // 
             // StatusTextBox
             // 
-            StatusTextBox.BackColor = Color.Gray;
+            StatusTextBox.BackColor = Color.White;
+            StatusTextBox.BorderStyle = BorderStyle.FixedSingle;
+            StatusTextBox.Enabled = false;
             StatusTextBox.Location = new Point(12, 84);
             StatusTextBox.Name = "StatusTextBox";
             StatusTextBox.ReadOnly = true;
@@ -98,6 +105,7 @@
             Controls.Add(FingerprintPictureBox);
             Controls.Add(CloseButton);
             FormBorderStyle = FormBorderStyle.None;
+            Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "VerifyFingerprint";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "VerifyFingerprint";

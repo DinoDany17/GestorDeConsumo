@@ -101,5 +101,21 @@ namespace GestorDeConsumo.Views.UserControllers
                 }
             }
         }
+
+        private void TableConsumption_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
+        {
+            if (e.ColumnIndex == 0)
+            {
+                e.AdvancedBorderStyle.Left = DataGridViewAdvancedCellBorderStyle.None;
+            }
+            if (e.ColumnIndex == 4)
+            {
+                e.AdvancedBorderStyle.Right = DataGridViewAdvancedCellBorderStyle.None;
+            }
+            if (e.RowIndex == -1)
+            {
+                e.AdvancedBorderStyle.Top = DataGridViewAdvancedCellBorderStyle.None;
+            }
+        }
     }
 }

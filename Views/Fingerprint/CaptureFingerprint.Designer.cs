@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CaptureFingerprint));
             FingerprintPictureBox = new PictureBox();
             TitleLabel = new Label();
             LogBox = new RichTextBox();
@@ -39,7 +40,7 @@
             // 
             // FingerprintPictureBox
             // 
-            FingerprintPictureBox.BackColor = Color.Gray;
+            FingerprintPictureBox.BackColor = Color.White;
             FingerprintPictureBox.Location = new Point(12, 50);
             FingerprintPictureBox.Name = "FingerprintPictureBox";
             FingerprintPictureBox.Size = new Size(379, 426);
@@ -58,7 +59,8 @@
             // 
             // LogBox
             // 
-            LogBox.BackColor = Color.Gray;
+            LogBox.BackColor = Color.White;
+            LogBox.BorderStyle = BorderStyle.None;
             LogBox.Location = new Point(416, 93);
             LogBox.Name = "LogBox";
             LogBox.ReadOnly = true;
@@ -69,12 +71,16 @@
             // 
             // ButtonClose
             // 
+            ButtonClose.BackColor = Color.FromArgb(165, 142, 116);
+            ButtonClose.FlatAppearance.BorderSize = 0;
+            ButtonClose.FlatStyle = FlatStyle.Flat;
+            ButtonClose.ForeColor = Color.FromArgb(255, 239, 205);
             ButtonClose.Location = new Point(689, 482);
             ButtonClose.Name = "ButtonClose";
             ButtonClose.Size = new Size(75, 23);
             ButtonClose.TabIndex = 4;
             ButtonClose.Text = "Cerrar";
-            ButtonClose.UseVisualStyleBackColor = true;
+            ButtonClose.UseVisualStyleBackColor = false;
             ButtonClose.Click += ButtonClose_Click;
             // 
             // StatusLabel
@@ -111,6 +117,7 @@
             Controls.Add(TitleLabel);
             Controls.Add(FingerprintPictureBox);
             FormBorderStyle = FormBorderStyle.None;
+            Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "CaptureFingerprint";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "CaptureFingerprint";
