@@ -1,25 +1,17 @@
-﻿using GestorDeConsumo.Controllers;
-using GestorDeConsumo.Views.UserControllers.MessageBoxes;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+﻿using GestorDeConsumo.Views.UserControllers.MessageBoxes;
 
 namespace GestorDeConsumo.Views.UserControllers
 {
     public partial class BackupRestore : UserControl
     {
         private static string directorio = Environment.GetEnvironmentVariable("APP_DIRECTORY") ?? "";
-        private static string databaseLocation = Path.Combine(directorio, "Database", "master.db");
+        private static string databaseLocation = Path.Combine(directorio, "master.db");
         private static string selectedBackup = "";
-        public BackupRestore()
+        private HomePage homePageForm;
+        public BackupRestore(HomePage homePageForm)
         {
             InitializeComponent();
+            this.homePageForm = homePageForm;
         }
 
         private void ButtonBackup_Click(object sender, EventArgs e)
@@ -69,6 +61,7 @@ namespace GestorDeConsumo.Views.UserControllers
             {
                 File.Copy(selectedBackup, databaseLocation, true);
                 CustomMessageBox.Show("Copia de seguridad restaurada con éxito", CustomMessageBoxType.Info);
+                homePageForm.ResetViews();
             }
             catch (Exception ex)
             {

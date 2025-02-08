@@ -78,5 +78,11 @@ namespace GestorDeConsumo.Views.UserControllers
                 e.AdvancedBorderStyle.Top = DataGridViewAdvancedCellBorderStyle.None;
             }
         }
+
+        public void ClearControl()
+        {
+            ReportTable.Rows.Clear();
+            ButtonDownloadExcel.Enabled = false;
+        }
     }
 }

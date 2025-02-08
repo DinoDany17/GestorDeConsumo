@@ -16,6 +16,11 @@ namespace GestorDeConsumo.Views.UserControllers
 
         private void RegisterDishType_Load(object sender, EventArgs e)
         {
+            LoadDishTypes();
+        }
+
+        private void LoadDishTypes()
+        {
             foreach (DishType dish in DishTypeController.GetAllDishTypes())
             {
                 TableDishType.Rows.Add(dish.id, dish.name, dish.cost);
@@ -121,6 +126,15 @@ namespace GestorDeConsumo.Views.UserControllers
             {
                 e.AdvancedBorderStyle.Top = DataGridViewAdvancedCellBorderStyle.None;
             }
+        }
+
+        public void ClearControl()
+        {
+            DishTypeTextBox.Text = "";
+            CostNumericDropDown.Value = 0;
+            TableDishType.Rows.Clear();
+            LoadDishTypes();
+            DishTypeController.UpdateDishTypesEnum();
         }
     }
 }

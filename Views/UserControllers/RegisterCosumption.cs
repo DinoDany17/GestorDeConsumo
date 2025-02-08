@@ -16,6 +16,11 @@ namespace GestorDeConsumo.Views.UserControllers
 
         private void RegisterCosumption_Load(object sender, EventArgs e)
         {
+            LoadConsumptions();
+        }
+
+        private void LoadConsumptions()
+        {
             foreach (string name in Enums.dishTypes.Select(dish => dish.name))
             {
                 ComboBoxDishType.Items.Add(name);
@@ -116,6 +121,14 @@ namespace GestorDeConsumo.Views.UserControllers
             {
                 e.AdvancedBorderStyle.Top = DataGridViewAdvancedCellBorderStyle.None;
             }
+        }
+
+        public void ClearControl()
+        {
+            ComboBoxDishType.SelectedIndex = -1;
+            ButtonFingerprint.Enabled = false;
+            TableConsumption.Rows.Clear();
+            LoadConsumptions();
         }
     }
 }

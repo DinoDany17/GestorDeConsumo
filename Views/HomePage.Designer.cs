@@ -40,7 +40,7 @@
             WindowButton = new Button();
             CloseButton = new Button();
             MainPanel = new Panel();
-            BackupRestoreInstance = new UserControllers.BackupRestore();
+            BackupRestoreInstance = new UserControllers.BackupRestore(this);
             RegisterConsumptionInstance = new UserControllers.RegisterCosumption();
             RegisterEmployeeInstance = new UserControllers.RegisterEmployee();
             RegisterDishTypeInstance = new UserControllers.RegisterDishType();

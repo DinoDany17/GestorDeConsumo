@@ -92,5 +92,13 @@ namespace GestorDeConsumo.Views
         {
             dragging = false;
         }
+
+        public void ResetViews()
+        {
+            RegisterConsumptionInstance.ClearControl();
+            RegisterEmployeeInstance.ClearControl();
+            RegisterDishTypeInstance.ClearControl();
+            ReportGenerationInstance.ClearControl();
+        }
     }
 }

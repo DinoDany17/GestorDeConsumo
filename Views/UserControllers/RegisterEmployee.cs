@@ -16,6 +16,11 @@ namespace GestorDeConsumo.Views.UserControllers
 
         private void RegisterEmployee_Load(object sender, EventArgs e)
         {
+            LoadEmployees();
+        }
+
+        private void LoadEmployees()
+        {
             foreach (Employee employee in EmployeeController.GetAllEmployees())
             {
                 TableEmployee.Rows.Add(employee.id, employee.name);
@@ -152,6 +157,13 @@ namespace GestorDeConsumo.Views.UserControllers
             {
                 e.AdvancedBorderStyle.Top = DataGridViewAdvancedCellBorderStyle.None;
             }
+        }
+
+        public void ClearControl()
+        {
+            TextBoxName.Text = "";
+            TableEmployee.Rows.Clear();
+            LoadEmployees();
         }
     }
 }
