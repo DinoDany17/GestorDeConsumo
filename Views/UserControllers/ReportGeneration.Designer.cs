@@ -29,15 +29,15 @@
         private void InitializeComponent()
         {
             DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
             RangeCalendar = new MonthCalendar();
             ReportTable = new DataGridView();
             CalendarLabel = new Label();
             ButtonGenerate = new Button();
             ButtonDownloadExcel = new Button();
             RangeLabel = new Label();
+            EmpNumber = new DataGridViewTextBoxColumn();
+            EmpName = new DataGridViewTextBoxColumn();
             DishType = new DataGridViewTextBoxColumn();
-            Cost = new DataGridViewTextBoxColumn();
             Quantity = new DataGridViewTextBoxColumn();
             Total = new DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)ReportTable).BeginInit();
@@ -75,7 +75,7 @@
             dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
             ReportTable.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             ReportTable.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            ReportTable.Columns.AddRange(new DataGridViewColumn[] { DishType, Cost, Quantity, Total });
+            ReportTable.Columns.AddRange(new DataGridViewColumn[] { EmpNumber, EmpName, DishType, Quantity, Total });
             ReportTable.EditMode = DataGridViewEditMode.EditProgrammatically;
             ReportTable.GridColor = SystemColors.ActiveCaptionText;
             ReportTable.Location = new Point(16, 18);
@@ -140,6 +140,18 @@
             RangeLabel.Size = new Size(0, 15);
             RangeLabel.TabIndex = 8;
             // 
+            // EmpNumber
+            // 
+            EmpNumber.HeaderText = "Número de empleado";
+            EmpNumber.Name = "EmpNumber";
+            EmpNumber.Width = 150;
+            // 
+            // EmpName
+            // 
+            EmpName.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            EmpName.HeaderText = "Nombre del empleado";
+            EmpName.Name = "EmpName";
+            // 
             // DishType
             // 
             DishType.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
@@ -147,28 +159,17 @@
             DishType.Name = "DishType";
             DishType.ReadOnly = true;
             // 
-            // Cost
-            // 
-            dataGridViewCellStyle2.NullValue = null;
-            Cost.DefaultCellStyle = dataGridViewCellStyle2;
-            Cost.HeaderText = "Precio unitario";
-            Cost.Name = "Cost";
-            Cost.ReadOnly = true;
-            Cost.Width = 150;
-            // 
             // Quantity
             // 
             Quantity.HeaderText = "Cantidad";
             Quantity.Name = "Quantity";
             Quantity.ReadOnly = true;
-            Quantity.Width = 150;
             // 
             // Total
             // 
             Total.HeaderText = "Total";
             Total.Name = "Total";
             Total.ReadOnly = true;
-            Total.Width = 150;
             // 
             // ReportGeneration
             // 
@@ -196,8 +197,9 @@
         private Button ButtonGenerate;
         private Button ButtonDownloadExcel;
         private Label RangeLabel;
+        private DataGridViewTextBoxColumn EmpNumber;
+        private DataGridViewTextBoxColumn EmpName;
         private DataGridViewTextBoxColumn DishType;
-        private DataGridViewTextBoxColumn Cost;
         private DataGridViewTextBoxColumn Quantity;
         private DataGridViewTextBoxColumn Total;
     }

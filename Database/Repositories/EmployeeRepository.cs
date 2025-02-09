@@ -25,6 +25,7 @@ namespace GestorDeConsumo.Database.Repositories
                             Employee employee = new Employee
                             (
                                 reader.GetInt32(reader.GetOrdinal("id")),
+                                reader.GetInt32(reader.GetOrdinal("emp_number")),
                                 reader.GetString(reader.GetOrdinal("name")),
                                 reader.GetFieldValue<byte[]>(reader.GetOrdinal("fingerprint")),
                                 null
@@ -59,6 +60,7 @@ namespace GestorDeConsumo.Database.Repositories
                             employee = new Employee
                             (
                                 reader.GetInt32(reader.GetOrdinal("id")),
+                                reader.GetInt32(reader.GetOrdinal("emp_number")),
                                 reader.GetString(reader.GetOrdinal("name")),
                                 reader.GetFieldValue<byte[]>(reader.GetOrdinal("fingerprint")),
                                 null
@@ -71,7 +73,7 @@ namespace GestorDeConsumo.Database.Repositories
             return employee;
         }
 
-        public static Employee? Insert(string name, byte[] fingerprint)
+        public static Employee? Insert(int emp_number, string name, byte[] fingerprint)
         {
             try
             {
@@ -79,13 +81,14 @@ namespace GestorDeConsumo.Database.Repositories
                 using (SQLiteConnection connection = database.GetConnection())
                 {
                     connection.Open();
-                    string query = "INSERT INTO Employee (name, fingerprint) VALUES (@name, @fingerprint); SELECT LAST_INSERT_ROWID()";
+                    string query = "INSERT INTO Employee (emp_number, name, fingerprint) VALUES (@emp_number, @name, @fingerprint); SELECT LAST_INSERT_ROWID()";
                     using (SQLiteCommand command = new SQLiteCommand(query, connection))
                     {
+                        command.Parameters.AddWithValue("@emp_number", emp_number);
                         command.Parameters.AddWithValue("@name", name);
                         command.Parameters.AddWithValue("@fingerprint", fingerprint);
                         int id = Convert.ToInt32(command.ExecuteScalar());
-                        return new Employee(id, name, fingerprint, null);
+                        return new Employee(id, emp_number, name, fingerprint, null);
                     }
                 }
             }

@@ -1,4 +1,5 @@
 ﻿using System.Data.SQLite;
+using System.Windows.Forms;
 using GestorDeConsumo.Database.Models;
 
 namespace GestorDeConsumo.Database.Repositories
@@ -94,8 +95,11 @@ namespace GestorDeConsumo.Database.Repositories
             using (SQLiteConnection connection = database.GetConnection())
             {
                 connection.Open();
-                string sql = "SELECT DishType.name as dish, cost, COUNT(DishType.id) as quantity FROM Consumption INNER JOIN DishType ON (DishType.id = Consumption.dish_type_id) " +
-                $"WHERE date BETWEEN '{start} 00:00:00' AND '{end} 23:59:59' GROUP BY DishType.id;";
+                string sql = "SELECT emp_number, Employee.name as emp_name, DishType.name as dish, cost, COUNT(dish_type_id) as quantity " +
+                "FROM Consumption " +
+                "INNER JOIN DishType ON dish_type_id = DishType.id " +
+                "INNER JOIN Employee ON employee_id = Employee.id " +
+                $"WHERE date BETWEEN '{start} 00:00:00' AND '{end} 23:59:59' GROUP BY dish_type_id, employee_id;";
                 using (SQLiteCommand command = new SQLiteCommand(sql, connection))
                 {
                     using (SQLiteDataReader reader = command.ExecuteReader())
@@ -106,6 +110,8 @@ namespace GestorDeConsumo.Database.Repositories
                             int quantity = reader.GetInt32(reader.GetOrdinal("quantity"));
                             decimal total = cost * quantity;
                             reportRow.Add(new ConsumptionReportRow(
+                                reader.GetInt32(reader.GetOrdinal("emp_number")),
+                                reader.GetString(reader.GetOrdinal("emp_name")),
                                 reader.GetString(reader.GetOrdinal("dish")),
                                 cost,
                                 quantity,

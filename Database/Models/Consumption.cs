@@ -36,13 +36,17 @@ namespace GestorDeConsumo.Database.Models
 
     public class ConsumptionReportRow
     {
+        public int emp_number { get; set; }
+        public string emp_name { get; set; }
         public string dish { get; set; }
         public decimal cost { get; set; }
         public int quantity { get; set; }
         public decimal total { get; set; }
 
-        public ConsumptionReportRow(string dish, decimal cost, int quantity, decimal total)
+        public ConsumptionReportRow(int emp_number, string emp_name, string dish, decimal cost, int quantity, decimal total)
         {
+            this.emp_number = emp_number;
+            this.emp_name = emp_name;
             this.dish = dish;
             this.cost = cost;
             this.quantity = quantity;

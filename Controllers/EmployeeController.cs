@@ -10,9 +10,9 @@ namespace GestorDeConsumo.Controllers
             return EmployeeRepository.GetAll();
         }
 
-        public static Employee? RegisterEmployee(string name, byte[] fingerprint)
+        public static Employee? RegisterEmployee(int emp_number, string name, byte[] fingerprint)
         {
-            return EmployeeRepository.Insert(name, fingerprint);
+            return EmployeeRepository.Insert(emp_number, name, fingerprint);
         }
 
         public static bool UpdateEmployee(int id, string columnName, dynamic value)

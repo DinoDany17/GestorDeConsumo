@@ -13,6 +13,8 @@ namespace GestorDeConsumo.Views.UserControllers
         }
 
         private string? originalCellValue = "";
+        private bool validEmpNumber = false;
+        private bool validName = false;
 
         private void RegisterEmployee_Load(object sender, EventArgs e)
         {
@@ -23,7 +25,7 @@ namespace GestorDeConsumo.Views.UserControllers
         {
             foreach (Employee employee in EmployeeController.GetAllEmployees())
             {
-                TableEmployee.Rows.Add(employee.id, employee.name);
+                TableEmployee.Rows.Add(employee.id, employee.emp_number, employee.name);
             }
         }
 
@@ -53,8 +55,9 @@ namespace GestorDeConsumo.Views.UserControllers
                     CustomMessageBox.Show("La captura fue cancelada por el usuario", CustomMessageBoxType.Warning);
                     break;
                 case DialogResult.OK:
+                    int emp_number = Int32.Parse(EmpNumberUpDown.Text);
                     string nameTrimmed = TextBoxName.Text.Trim();
-                    Employee? newEmployee = EmployeeController.RegisterEmployee(nameTrimmed, fingerprint);
+                    Employee? newEmployee = EmployeeController.RegisterEmployee(emp_number, nameTrimmed, fingerprint);
                     if (newEmployee != null)
                     {
                         TableEmployee.Rows.Add(newEmployee.id, newEmployee.name);
@@ -70,14 +73,8 @@ namespace GestorDeConsumo.Views.UserControllers
         private void TextBoxName_TextChanged(object sender, EventArgs e)
         {
             string textTrimmed = TextBoxName.Text.Trim();
-            if (textTrimmed == "")
-            {
-                ButtonFingerprint.Enabled = false;
-            }
-            else
-            {
-                ButtonFingerprint.Enabled = true;
-            }
+            validName = textTrimmed != "";
+            EnableButtonFingerprint();
         }
 
         private void TableEmployee_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -149,7 +146,7 @@ namespace GestorDeConsumo.Views.UserControllers
             {
                 e.AdvancedBorderStyle.Left = DataGridViewAdvancedCellBorderStyle.None;
             }
-            if (e.ColumnIndex == 2)
+            if (e.ColumnIndex == 3)
             {
                 e.AdvancedBorderStyle.Right = DataGridViewAdvancedCellBorderStyle.None;
             }
@@ -164,6 +161,26 @@ namespace GestorDeConsumo.Views.UserControllers
             TextBoxName.Text = "";
             TableEmployee.Rows.Clear();
             LoadEmployees();
+        }
+
+        private void EnableButtonFingerprint()
+        {
+            ButtonFingerprint.Enabled = validEmpNumber && validName;
+        }
+
+        private void EmpNumberUpDown_ValueChanged(object sender, EventArgs e)
+        {
+            int empNumber = Int32.Parse(EmpNumberUpDown.Text);
+            validEmpNumber = empNumber > 0;
+            EnableButtonFingerprint();
+        }
+
+        private void EmpNumberUpDown_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsDigit(e.KeyChar) && e.KeyChar != (char)8)
+            {
+                e.Handled = true;
+            }
         }
     }
 }

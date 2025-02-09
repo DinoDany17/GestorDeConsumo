@@ -39,7 +39,7 @@ namespace GestorDeConsumo.Views.UserControllers
             {
                 foreach (ConsumptionReportRow row in currentReport)
                 {
-                    ReportTable.Rows.Add(row.dish, row.cost, row.quantity, row.total);
+                    ReportTable.Rows.Add(row.emp_name, row.emp_number, row.dish, row.quantity, row.total);
                 }
                 ButtonDownloadExcel.Enabled = true;
             }
@@ -54,7 +54,7 @@ namespace GestorDeConsumo.Views.UserControllers
                 string filePath = saveFileDialog.FileName;
                 DateTime startDay = RangeCalendar.SelectionStart;
                 DateTime endDay = RangeCalendar.SelectionEnd;
-                string range = $"De {startDay.ToString("yyyy-MM-dd")} a {endDay.ToString("yyyy-MM-dd")}";
+                string range = $"De {startDay.ToString("yyyy/MM/dd")} a {endDay.ToString("yyyy/MM/dd")}";
                 ReportController.GenerateConsumptionPerDishExcel(currentReport, filePath, range);
             }
             else
@@ -69,7 +69,7 @@ namespace GestorDeConsumo.Views.UserControllers
             {
                 e.AdvancedBorderStyle.Left = DataGridViewAdvancedCellBorderStyle.None;
             }
-            if (e.ColumnIndex == 3)
+            if (e.ColumnIndex == 4)
             {
                 e.AdvancedBorderStyle.Right = DataGridViewAdvancedCellBorderStyle.None;
             }

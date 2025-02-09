@@ -1,4 +1,5 @@
-﻿using System.Data.SQLite;
+﻿using System.Data.Entity;
+using System.Data.SQLite;
 
 namespace GestorDeConsumo
 {
@@ -21,7 +22,7 @@ namespace GestorDeConsumo
                 using (SQLiteConnection connection = GetConnection())
                 {
                     connection.Open();
-                    string sql = "CREATE TABLE IF NOT EXISTS Employee (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT NOT NULL, fingerprint BLOB NOT NULL, deleted_at TEXT)";
+                    string sql = "CREATE TABLE IF NOT EXISTS Employee (id INTEGER PRIMARY KEY AUTOINCREMENT, emp_number INTEGER NOT NULL, name TEXT NOT NULL, fingerprint BLOB NOT NULL, deleted_at TEXT)";
                     using (SQLiteCommand command = new SQLiteCommand(sql, connection))
                     {
                         command.ExecuteNonQuery();
