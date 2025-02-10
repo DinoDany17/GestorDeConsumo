@@ -28,18 +28,18 @@
         /// </summary>
         private void InitializeComponent()
         {
-            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
             ButtonFingerprint = new Button();
             LabelEmployeeName = new Label();
             TableEmployee = new DataGridView();
-            id = new DataGridViewTextBoxColumn();
-            EmpNumber = new DataGridViewTextBoxColumn();
-            name = new DataGridViewTextBoxColumn();
-            delete = new DataGridViewButtonColumn();
             TextBoxName = new TextBox();
             EmpNumberLabel = new Label();
             EmpNumberUpDown = new NumericUpDown();
+            id = new DataGridViewTextBoxColumn();
+            emp_number = new DataGridViewTextBoxColumn();
+            name = new DataGridViewTextBoxColumn();
+            delete = new DataGridViewButtonColumn();
             ((System.ComponentModel.ISupportInitialize)TableEmployee).BeginInit();
             ((System.ComponentModel.ISupportInitialize)EmpNumberUpDown).BeginInit();
             SuspendLayout();
@@ -78,16 +78,16 @@
             TableEmployee.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             TableEmployee.BackgroundColor = Color.White;
             TableEmployee.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
-            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle3.BackColor = Color.FromArgb(66, 69, 48);
-            dataGridViewCellStyle3.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            dataGridViewCellStyle3.ForeColor = Color.FromArgb(255, 239, 205);
-            dataGridViewCellStyle3.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle3.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle3.WrapMode = DataGridViewTriState.True;
-            TableEmployee.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = Color.FromArgb(66, 69, 48);
+            dataGridViewCellStyle1.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle1.ForeColor = Color.FromArgb(255, 239, 205);
+            dataGridViewCellStyle1.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
+            TableEmployee.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             TableEmployee.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            TableEmployee.Columns.AddRange(new DataGridViewColumn[] { id, EmpNumber, name, delete });
+            TableEmployee.Columns.AddRange(new DataGridViewColumn[] { id, emp_number, name, delete });
             TableEmployee.EditMode = DataGridViewEditMode.EditOnKeystroke;
             TableEmployee.GridColor = SystemColors.ActiveCaptionText;
             TableEmployee.Location = new Point(19, 75);
@@ -101,40 +101,6 @@
             TableEmployee.CellContentClick += TableEmployee_CellContentClick;
             TableEmployee.CellEndEdit += TableEmployee_CellEndEdit;
             TableEmployee.CellPainting += TableEmployee_CellPainting;
-            // 
-            // id
-            // 
-            id.Frozen = true;
-            id.HeaderText = "Id";
-            id.Name = "id";
-            id.ReadOnly = true;
-            // 
-            // EmpNumber
-            // 
-            EmpNumber.HeaderText = "Número de empleado";
-            EmpNumber.Name = "EmpNumber";
-            EmpNumber.Width = 150;
-            // 
-            // name
-            // 
-            name.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            name.HeaderText = "Nombre";
-            name.MinimumWidth = 200;
-            name.Name = "name";
-            // 
-            // delete
-            // 
-            dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle4.BackColor = Color.FromArgb(165, 142, 116);
-            dataGridViewCellStyle4.ForeColor = Color.FromArgb(255, 239, 205);
-            delete.DefaultCellStyle = dataGridViewCellStyle4;
-            delete.FlatStyle = FlatStyle.Flat;
-            delete.HeaderText = "";
-            delete.Name = "delete";
-            delete.ReadOnly = true;
-            delete.Text = "X";
-            delete.UseColumnTextForButtonValue = true;
-            delete.Width = 50;
             // 
             // TextBoxName
             // 
@@ -167,6 +133,40 @@
             EmpNumberUpDown.ValueChanged += EmpNumberUpDown_ValueChanged;
             EmpNumberUpDown.KeyPress += EmpNumberUpDown_KeyPress;
             // 
+            // id
+            // 
+            id.Frozen = true;
+            id.HeaderText = "Id";
+            id.Name = "id";
+            id.ReadOnly = true;
+            // 
+            // emp_number
+            // 
+            emp_number.HeaderText = "Número de empleado";
+            emp_number.Name = "emp_number";
+            emp_number.Width = 150;
+            // 
+            // name
+            // 
+            name.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            name.HeaderText = "Nombre";
+            name.MinimumWidth = 200;
+            name.Name = "name";
+            // 
+            // delete
+            // 
+            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle2.BackColor = Color.FromArgb(165, 142, 116);
+            dataGridViewCellStyle2.ForeColor = Color.FromArgb(255, 239, 205);
+            delete.DefaultCellStyle = dataGridViewCellStyle2;
+            delete.FlatStyle = FlatStyle.Flat;
+            delete.HeaderText = "";
+            delete.Name = "delete";
+            delete.ReadOnly = true;
+            delete.Text = "X";
+            delete.UseColumnTextForButtonValue = true;
+            delete.Width = 50;
+            // 
             // RegisterEmployee
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -195,7 +195,7 @@
         private Label EmpNumberLabel;
         private NumericUpDown EmpNumberUpDown;
         private DataGridViewTextBoxColumn id;
-        private DataGridViewTextBoxColumn EmpNumber;
+        private DataGridViewTextBoxColumn emp_number;
         private DataGridViewTextBoxColumn name;
         private DataGridViewButtonColumn delete;
     }

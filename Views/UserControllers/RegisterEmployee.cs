@@ -60,7 +60,7 @@ namespace GestorDeConsumo.Views.UserControllers
                     Employee? newEmployee = EmployeeController.RegisterEmployee(emp_number, nameTrimmed, fingerprint);
                     if (newEmployee != null)
                     {
-                        TableEmployee.Rows.Add(newEmployee.id, newEmployee.name);
+                        TableEmployee.Rows.Add(newEmployee.id, newEmployee.emp_number, newEmployee.name);
                         TextBoxName.Text = "";
                     }
                     break;
@@ -80,7 +80,7 @@ namespace GestorDeConsumo.Views.UserControllers
         private void TableEmployee_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
             DataGridViewRow currentRow = TableEmployee.Rows[e.RowIndex];
-            if (e.ColumnIndex == 2)
+            if (e.ColumnIndex == 3)
             {
                 DialogResult response = CustomMessageBox.Show("¿Estás seguro de querer eliminar el registro de este empleado?", CustomMessageBoxType.Confirm);
                 if (response == DialogResult.OK)
@@ -106,6 +106,10 @@ namespace GestorDeConsumo.Views.UserControllers
             {
                 originalCellValue = TableEmployee.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString();
             }
+            if (currentColumn.Name == "emp_number")
+            {
+                originalCellValue = TableEmployee.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString();
+            }
         }
 
         private void TableEmployee_CellEndEdit(object sender, DataGridViewCellEventArgs e)
@@ -126,7 +130,31 @@ namespace GestorDeConsumo.Views.UserControllers
                 if (id == -1)
                 {
                     currentCell.Value = originalCellValue;
-                    CustomMessageBox.Show("Id inválido", CustomMessageBoxType.Error);
+                    CustomMessageBox.Show("Id de empleado inválido", CustomMessageBoxType.Error);
+                    return;
+                }
+                bool success = EmployeeController.UpdateEmployee(id, currentColumn.Name, value);
+                if (!success)
+                {
+                    currentCell.Value = originalCellValue;
+                    CustomMessageBox.Show("Error al actualizar el empleado", CustomMessageBoxType.Error);
+                }
+            }
+            if (currentColumn.Name == "emp_number")
+            {
+                string? value = currentCell.Value?.ToString();
+                int valueInt = int.TryParse(value, out var parsedValue) ? parsedValue : -1;
+                if (string.IsNullOrEmpty(value) || valueInt < 1)
+                {
+                    currentCell.Value = originalCellValue;
+                    CustomMessageBox.Show("El número de empleado no puede ser menor a 1", CustomMessageBoxType.Warning);
+                    return;
+                }
+                int id = int.TryParse(currentRow.Cells[0].Value?.ToString(), out var parsedId) ? parsedId : -1;
+                if (id == -1)
+                {
+                    currentCell.Value = originalCellValue;
+                    CustomMessageBox.Show("Id de empleado inválido", CustomMessageBoxType.Error);
                     return;
                 }
                 bool success = EmployeeController.UpdateEmployee(id, currentColumn.Name, value);
